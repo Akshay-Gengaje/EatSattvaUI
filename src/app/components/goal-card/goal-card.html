@@ -1,0 +1,24 @@
+<article
+  class="goal-card"
+  [class.goal-card--selected]="selected()"
+  [style.--goal-color]="goal().color"
+  (click)="onSelect()"
+  role="button"
+  tabindex="0"
+  (keydown.enter)="onSelect()"
+  (keydown.space)="onSelect()"
+>
+  <!-- Selected checkmark -->
+  @if (selected()) {
+    <span class="goal-card__check">✓</span>
+  }
+
+  <!-- Icon -->
+  <div class="goal-card__icon-wrap">
+    <span class="goal-card__icon">{{ goal().icon }}</span>
+  </div>
+
+  <!-- Text -->
+  <h3 class="goal-card__name">{{ goal().name }}</h3>
+  <p class="goal-card__desc">{{ goal().description }}</p>
+</article>

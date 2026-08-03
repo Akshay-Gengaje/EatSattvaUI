@@ -1,0 +1,264 @@
+<!-- Confetti Overlay -->
+@if (showConfetti()) {
+  <div class="confetti-overlay" aria-hidden="true">
+    @for (i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]; track i) {
+      <span
+        class="confetti-piece"
+        [style.--x]="(i * 37 % 100) + '%'"
+        [style.--delay]="(i * 0.08) + 's'"
+        [style.--color]="i % 4 === 0 ? 'var(--primary)' : i % 4 === 1 ? 'var(--secondary)' : i % 4 === 2 ? 'var(--accent)' : 'var(--success)'"
+      ></span>
+    }
+  </div>
+}
+
+<section class="checkout">
+  <div class="container">
+
+    <!-- Order Placed Success -->
+    @if (orderPlaced()) {
+      <div class="order-success animate-fade-in-up">
+        <div class="order-success__icon">🎉</div>
+        <h1 class="order-success__title">Order Placed Successfully!</h1>
+        <p class="order-success__text">
+          Your personalized fruit box is being prepared.
+          @if (isMonthlyPlan()) {
+            <br>Welcome to the Monthly Plan! Enjoy free delivery & nutritionist consultations.
+          }
+        </p>
+        <div class="order-success__details card">
+          <div class="order-success__row">
+            <span>📦 Box</span>
+            <span>{{ selectedGoal()?.name }} — {{ curatedFruits().length }} fruits</span>
+          </div>
+          <div class="order-success__row">
+            <span>💰 Total</span>
+            <span class="order-success__price">₹{{ totalPrice() | number:'1.0-0' }}</span>
+          </div>
+          <div class="order-success__row">
+            <span>🚚 Delivery</span>
+            <span>{{ deliverySlot === 'morning' ? '7am – 10am' : deliverySlot === 'afternoon' ? '12pm – 3pm' : '5pm – 8pm' }}</span>
+          </div>
+          <div class="order-success__row">
+            <span>📍 Address</span>
+            <span>{{ address }}, {{ pincode }}</span>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" (click)="goHome()">← Back to Home</button>
+      </div>
+    } @else {
+
+    <!-- Checkout Form -->
+    <div class="checkout__header animate-fade-in-up">
+      <button class="btn btn-secondary btn-sm" (click)="goBack()">← Back to Box</button>
+      <div class="text-center">
+        <span class="section-label">Checkout</span>
+        <h1 class="section-title">Complete Your Order</h1>
+      </div>
+      <div style="width: 120px;"></div>
+    </div>
+
+    <div class="checkout__layout">
+
+      <!-- Left: Forms -->
+      <div class="checkout__form animate-fade-in-up" style="animation-delay: 0.1s">
+
+        <!-- Delivery Details -->
+        <div class="form-section card">
+          <h2 class="form-section__title">📍 Delivery Details</h2>
+
+          <div class="form-group">
+            <label class="form-label" for="checkout-name">Full Name</label>
+            <input
+              id="checkout-name"
+              class="form-input"
+              type="text"
+              placeholder="Enter your full name"
+              [(ngModel)]="name"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="checkout-phone">Phone Number</label>
+              <input
+                id="checkout-phone"
+                class="form-input"
+                type="tel"
+                placeholder="10-digit phone number"
+                [(ngModel)]="phone"
+                maxlength="10"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="checkout-pincode">Pincode</label>
+              <input
+                id="checkout-pincode"
+                class="form-input"
+                type="text"
+                placeholder="6-digit pincode"
+                [(ngModel)]="pincode"
+                maxlength="6"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="checkout-address">Full Address</label>
+            <textarea
+              id="checkout-address"
+              class="form-input form-textarea"
+              placeholder="House no., Street, Landmark, City"
+              [(ngModel)]="address"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Delivery Slot -->
+        <div class="form-section card">
+          <h2 class="form-section__title">🕐 Delivery Slot</h2>
+          <div class="slot-options">
+            @for (slot of deliverySlots; track slot.value) {
+              <label
+                class="slot-option"
+                [class.slot-option--active]="deliverySlot === slot.value"
+              >
+                <input
+                  type="radio"
+                  name="deliverySlot"
+                  [value]="slot.value"
+                  [(ngModel)]="deliverySlot"
+                  class="slot-option__radio"
+                />
+                <span class="slot-option__label">{{ slot.label }}</span>
+              </label>
+            }
+          </div>
+        </div>
+
+        <!-- Plan Selection -->
+        <div class="form-section card">
+          <h2 class="form-section__title">📋 Choose Plan</h2>
+          <div class="plan-options">
+            <label
+              class="plan-option"
+              [class.plan-option--active]="!isMonthlyPlan()"
+              (click)="boxService.setPlan(false)"
+            >
+              <div class="plan-option__header">
+                <strong>Weekly (One-time)</strong>
+                <span class="plan-option__price">₹{{ boxPrice() | number:'1.0-0' }} + ₹{{ deliveryFee }} delivery</span>
+              </div>
+              <span class="plan-option__desc">No commitment, pay per box</span>
+            </label>
+            <label
+              class="plan-option plan-option--recommended"
+              [class.plan-option--active]="isMonthlyPlan()"
+              (click)="boxService.setPlan(true)"
+            >
+              <span class="plan-option__badge badge badge-gold">Best Value</span>
+              <div class="plan-option__header">
+                <strong>Monthly Subscription</strong>
+                <span class="plan-option__price">₹999/month (4 boxes)</span>
+              </div>
+              <span class="plan-option__desc">✨ Free delivery + 🧑‍⚕️ Free nutritionist consultation</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="form-section card">
+          <h2 class="form-section__title">💳 Payment Method</h2>
+          <div class="payment-options">
+            @for (pm of paymentMethods; track pm.value) {
+              <label
+                class="payment-option"
+                [class.payment-option--active]="paymentMethod === pm.value"
+              >
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  [value]="pm.value"
+                  [(ngModel)]="paymentMethod"
+                  class="payment-option__radio"
+                />
+                <span class="payment-option__label">{{ pm.label }}</span>
+              </label>
+            }
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="checkout__summary animate-fade-in-up" style="animation-delay: 0.2s">
+        <div class="summary-card card">
+          <h3 class="summary-card__title">🛒 Order Summary</h3>
+
+          @if (selectedGoal(); as goal) {
+            <div class="summary-card__goal">
+              <span>{{ goal.icon }}</span>
+              <span>{{ goal.name }}</span>
+            </div>
+          }
+
+          <div class="summary-card__items">
+            @for (fruit of curatedFruits(); track fruit.id) {
+              <div class="summary-item">
+                <span class="summary-item__emoji">{{ fruit.emoji }}</span>
+                <span class="summary-item__name">{{ fruit.name }}</span>
+                <span class="summary-item__qty">{{ fruit.quantityGrams }}g</span>
+              </div>
+            }
+          </div>
+
+          <div class="summary-card__divider"></div>
+
+          <div class="summary-card__row">
+            <span>Box price</span>
+            <span>₹{{ boxPrice() | number:'1.0-0' }}</span>
+          </div>
+          <div class="summary-card__row">
+            <span>Delivery</span>
+            @if (isMonthlyPlan()) {
+              <span class="summary-card__free">FREE</span>
+            } @else {
+              <span>₹{{ deliveryFee }}</span>
+            }
+          </div>
+
+          <div class="summary-card__divider"></div>
+
+          <div class="summary-card__row summary-card__row--total">
+            <span>Total</span>
+            <span>₹{{ totalPrice() | number:'1.0-0' }}</span>
+          </div>
+
+          @if (isMonthlyPlan()) {
+            <div class="summary-card__perks">
+              <div class="summary-card__perk">🚚 Free delivery on all boxes</div>
+              <div class="summary-card__perk">🧑‍⚕️ Free nutritionist consultation</div>
+              <div class="summary-card__perk">⏸️ Pause or cancel anytime</div>
+            </div>
+          }
+
+          <button
+            class="btn btn-primary btn-lg summary-card__cta"
+            [disabled]="!isFormValid"
+            (click)="placeOrder()"
+          >
+            Place Order 🎉
+          </button>
+
+          @if (!isFormValid) {
+            <p class="summary-card__hint">Fill all delivery details to place order</p>
+          }
+        </div>
+      </div>
+
+    </div>
+    }
+
+  </div>
+</section>

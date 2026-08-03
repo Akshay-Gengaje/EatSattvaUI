@@ -1,0 +1,309 @@
+/* ============================================================
+   Box Preview Page
+   ============================================================ */
+
+.box-preview {
+  min-height: 100vh;
+  padding: calc(72px + var(--space-2xl)) 0 var(--space-4xl);
+  background: var(--bg-primary);
+}
+
+/* ---------- Header ---------- */
+.box-preview__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-2xl);
+}
+
+/* ---------- Layout ---------- */
+.box-preview__layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+/* ---------- Fruits Section ---------- */
+.box-preview__sub-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.box-fruits-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.box-fruit-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.box-fruit-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.box-fruit-item__emoji-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.box-fruit-item__emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.box-fruit-item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.box-fruit-item__name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.box-fruit-item__qty {
+  font-size: var(--fs-sm);
+  color: var(--text-light);
+}
+
+.box-fruit-item__nutrient {
+  flex-shrink: 0;
+}
+
+/* ---------- Sidebar ---------- */
+.box-preview__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: sticky;
+  top: calc(72px + var(--space-xl));
+}
+
+/* ---------- Nutrition Panel ---------- */
+.nutrition-panel {
+  padding: var(--space-xl);
+}
+
+.nutrition-panel__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.nutrition-panel__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.nutrition-bar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: 4px;
+}
+
+.nutrition-bar__icon {
+  font-size: var(--fs-sm);
+  flex-shrink: 0;
+}
+
+.nutrition-bar__name {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.nutrition-bar__pct {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.nutrition-bar__track {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.nutrition-bar__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Price Card ---------- */
+.price-card {
+  padding: var(--space-xl);
+}
+
+.price-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.price-card__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-sm);
+  color: var(--text-body);
+  padding: var(--space-sm) 0;
+}
+
+.price-card__row--total {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  padding: var(--space-md) 0;
+}
+
+.price-card__free {
+  color: var(--success);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+.price-card__divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: var(--space-sm) 0;
+}
+
+.price-card__cta {
+  width: 100%;
+  margin-top: var(--space-lg);
+}
+
+/* ---------- Plan Toggle ---------- */
+.plan-toggle {
+  display: flex;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  margin: var(--space-md) 0;
+}
+
+.plan-toggle__btn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-light);
+  background: transparent;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  border: none;
+}
+
+.plan-toggle__btn--active {
+  background: var(--white);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Upsell Card ---------- */
+.upsell-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: rgba(74, 124, 89, 0.06);
+  border: 1px solid rgba(74, 124, 89, 0.15);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-sm);
+}
+
+.upsell-card__icon {
+  font-size: var(--fs-lg);
+  flex-shrink: 0;
+}
+
+.upsell-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.upsell-card__text strong {
+  font-size: var(--fs-sm);
+  color: var(--primary-dark);
+}
+
+.upsell-card__text span {
+  font-size: var(--fs-xs);
+  color: var(--text-body);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .box-preview__layout {
+    grid-template-columns: 1fr 340px;
+  }
+}
+
+@media (max-width: 768px) {
+  .box-preview__header {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .box-preview__header > div:last-child {
+    display: none;
+  }
+
+  .box-preview__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .box-preview__sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .box-fruit-item {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .box-fruit-item__nutrient {
+    margin-left: auto;
+  }
+}

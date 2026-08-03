@@ -1,0 +1,212 @@
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero gradient-hero">
+  <!-- Floating decorative emojis -->
+  @for (item of heroEmojis; track item.emoji) {
+    <span
+      class="hero__float-emoji animate-float"
+      [style.top]="item.top"
+      [style.left]="item.left || 'auto'"
+      [style.right]="item.right || 'auto'"
+      [style.font-size]="item.size"
+      [style.animation-delay]="item.delay"
+      aria-hidden="true"
+    >{{ item.emoji }}</span>
+  }
+
+  <div class="container hero__container">
+    <!-- Left content -->
+    <div class="hero__content">
+      <span class="badge badge-primary hero__badge animate-fade-in-up">🍃 Nutritionist-Guided Wellness</span>
+
+      <h1 class="hero__heading animate-fade-in-up" style="animation-delay: 0.1s">
+        Eat Smart.<br>
+        <span class="hero__heading-accent">Live Sattva.</span>
+      </h1>
+
+      <p class="hero__subtext animate-fade-in-up" style="animation-delay: 0.2s">
+        Personalized fruit boxes curated by expert nutritionists, based on your health goals.
+        Fresh, seasonal, delivered weekly.
+      </p>
+
+      <div class="hero__actions animate-fade-in-up" style="animation-delay: 0.3s">
+        <a routerLink="/select-goal" class="btn btn-primary btn-lg">Get Your Box →</a>
+        <button class="btn btn-secondary btn-lg" (click)="scrollTo('how-it-works')">How It Works ↓</button>
+      </div>
+
+      <p class="hero__trust animate-fade-in-up" style="animation-delay: 0.4s">
+        ✦ 2,000+ happy customers · 🚚 Free delivery for subscribers
+      </p>
+    </div>
+
+    <!-- Right decorative circle -->
+    <div class="hero__visual animate-fade-in" style="animation-delay: 0.3s">
+      <div class="hero__circle">
+        <div class="hero__circle-ring"></div>
+        @for (e of circleEmojis; track e; let i = $index) {
+          <span
+            class="hero__circle-emoji"
+            [style.--angle]="(i * 360 / circleEmojis.length) + 'deg'"
+            aria-hidden="true"
+          >{{ e }}</span>
+        }
+        <span class="hero__circle-center" aria-hidden="true">🍽️</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS SECTION
+     ============================================================ -->
+<section class="section how-it-works" id="how-it-works" style="background: var(--bg-secondary);">
+  <div class="container text-center">
+    <span class="section-label">Simple &amp; Easy</span>
+    <h2 class="section-title">How EatSattva Works</h2>
+    <p class="section-subtitle">Three easy steps to your personalized fruit box</p>
+
+    <div class="steps">
+      <!-- Step 1 -->
+      <div class="step-card card">
+        <div class="step-card__number">1</div>
+        <div class="step-card__icon">🎯</div>
+        <h3 class="step-card__title">Choose Your Goal</h3>
+        <p class="step-card__desc">Select a health goal or nutritional deficiency you want to address</p>
+      </div>
+
+      <!-- Dashed connector -->
+      <div class="steps__connector" aria-hidden="true"></div>
+
+      <!-- Step 2 -->
+      <div class="step-card card">
+        <div class="step-card__number">2</div>
+        <div class="step-card__icon">🧑‍⚕️</div>
+        <h3 class="step-card__title">Nutritionist Curates Your Box</h3>
+        <p class="step-card__desc">Our expert nutritionists pick the best seasonal fruits matched to your nutritional needs</p>
+      </div>
+
+      <!-- Dashed connector -->
+      <div class="steps__connector" aria-hidden="true"></div>
+
+      <!-- Step 3 -->
+      <div class="step-card card">
+        <div class="step-card__number">3</div>
+        <div class="step-card__icon">📦</div>
+        <h3 class="step-card__title">Delivered Fresh</h3>
+        <p class="step-card__desc">Get your personalized fruit box delivered to your doorstep weekly</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SEASONAL FRUITS SECTION
+     ============================================================ -->
+<section class="section seasonal-fruits">
+  <div class="container text-center">
+    <span class="section-label">Fresh Picks</span>
+    <h2 class="section-title">This Season's Best</h2>
+    <p class="section-subtitle">Hand-picked seasonal fruits for maximum nutrition</p>
+
+    <div class="fruits-grid">
+      @for (fruit of seasonalFruits(); track fruit.id) {
+        <app-fruit-card [fruit]="fruit"></app-fruit-card>
+      }
+    </div>
+
+    <a routerLink="/fruits" class="fruits-grid__link">View All Fruits →</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRICING SECTION
+     ============================================================ -->
+<section class="section pricing" id="pricing" style="background: var(--bg-secondary);">
+  <div class="container text-center">
+    <span class="section-label">Pricing</span>
+    <h2 class="section-title">Choose Your Plan</h2>
+    <p class="section-subtitle">Flexible options that fit your lifestyle</p>
+
+    <div class="pricing-grid">
+      @for (plan of pricingPlans; track plan.id) {
+        <div class="pricing-card" [class.pricing-card--highlighted]="plan.highlighted">
+          @if (plan.badge) {
+            <span class="pricing-card__badge badge badge-gold">{{ plan.badge }}</span>
+          }
+          <h3 class="pricing-card__name">{{ plan.name }}</h3>
+          <p class="pricing-card__desc">{{ plan.description }}</p>
+          <div class="pricing-card__price">{{ plan.price }}</div>
+          <p class="pricing-card__subtext">{{ plan.priceSubtext }}</p>
+          <ul class="pricing-card__features">
+            @for (feature of plan.features; track feature) {
+              <li class="pricing-card__feature">
+                <span class="pricing-card__check">✓</span>
+                {{ feature }}
+              </li>
+            }
+          </ul>
+          <a
+            routerLink="/select-goal"
+            class="btn"
+            [class.btn-primary]="plan.highlighted"
+            [class.btn-outline]="!plan.highlighted"
+          >{{ plan.cta }}</a>
+        </div>
+      }
+    </div>
+
+    <p class="pricing__note">All plans include expert nutritionist curation &amp; seasonal freshness guarantee</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS SECTION
+     ============================================================ -->
+<section class="section testimonials">
+  <div class="container text-center">
+    <span class="section-label">Love Letters</span>
+    <h2 class="section-title">What Our Customers Say</h2>
+
+    <div class="testimonials-grid">
+      @for (t of testimonials; track t.id) {
+        <div class="testimonial-card card">
+          <div class="testimonial-card__header">
+            <span class="testimonial-card__avatar">{{ t.avatar }}</span>
+            <div class="testimonial-card__info">
+              <strong class="testimonial-card__name">{{ t.name }}</strong>
+              <span class="testimonial-card__city">{{ t.city }}</span>
+            </div>
+            <span class="badge badge-primary testimonial-card__goal">{{ t.goal }}</span>
+          </div>
+          <div class="testimonial-card__stars">
+            @for (star of getStars(t.rating); track star) {
+              <span>⭐</span>
+            }
+          </div>
+          <p class="testimonial-card__review">"{{ t.review }}"</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA BANNER SECTION
+     ============================================================ -->
+<section class="cta-banner gradient-primary">
+  <!-- Decorative side emojis -->
+  <span class="cta-banner__emoji cta-banner__emoji--left-1" aria-hidden="true">🍎</span>
+  <span class="cta-banner__emoji cta-banner__emoji--left-2" aria-hidden="true">🥝</span>
+  <span class="cta-banner__emoji cta-banner__emoji--right-1" aria-hidden="true">🍇</span>
+  <span class="cta-banner__emoji cta-banner__emoji--right-2" aria-hidden="true">🍊</span>
+
+  <div class="container text-center cta-banner__content">
+    <h2 class="cta-banner__heading">
+      Ready to Start Your<br>
+      Health Journey?
+    </h2>
+    <p class="cta-banner__subtext">Join 2,000+ happy customers eating smarter every week</p>
+    <a routerLink="/select-goal" class="btn cta-banner__btn">Get Your First Box →</a>
+  </div>
+</section>

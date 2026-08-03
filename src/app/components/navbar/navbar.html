@@ -1,0 +1,49 @@
+<nav class="navbar" [class.navbar--scrolled]="isScrolled()">
+  <div class="navbar__inner container">
+    <!-- Logo -->
+    <a routerLink="/" class="navbar__logo">
+      <span class="navbar__logo-leaf">🍃</span>
+      <span class="navbar__logo-text">EatSattva</span>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <ul class="navbar__links">
+      <li><a href="/#how-it-works" class="navbar__link">How It Works</a></li>
+      <li><a href="/#pricing" class="navbar__link">Pricing</a></li>
+      <li><a href="/#about" class="navbar__link">About</a></li>
+    </ul>
+
+    <!-- Auth & CTA -->
+    <div class="navbar__actions">
+      <a routerLink="/login" class="navbar__link navbar__signin" id="navbar-signin">Sign In</a>
+      <a routerLink="/signup" class="btn btn-coral btn-sm navbar__cta" id="navbar-signup">Sign Up</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button
+      class="navbar__hamburger"
+      [class.navbar__hamburger--active]="isMobileMenuOpen()"
+      (click)="toggleMobileMenu()"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="navbar__hamburger-line"></span>
+      <span class="navbar__hamburger-line"></span>
+      <span class="navbar__hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Overlay -->
+  @if (isMobileMenuOpen()) {
+    <div class="navbar__overlay" (click)="closeMobileMenu()">
+      <div class="navbar__overlay-content" (click)="$event.stopPropagation()">
+        <ul class="navbar__overlay-links">
+          <li><a href="/#how-it-works" class="navbar__overlay-link" (click)="closeMobileMenu()">How It Works</a></li>
+          <li><a href="/#pricing" class="navbar__overlay-link" (click)="closeMobileMenu()">Pricing</a></li>
+          <li><a href="/#about" class="navbar__overlay-link" (click)="closeMobileMenu()">About</a></li>
+          <li><a routerLink="/login" class="navbar__overlay-link" (click)="closeMobileMenu()">Sign In</a></li>
+        </ul>
+        <a routerLink="/signup" class="btn btn-coral navbar__overlay-cta" (click)="closeMobileMenu()">Sign Up</a>
+      </div>
+    </div>
+  }
+</nav>

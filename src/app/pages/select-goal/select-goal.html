@@ -1,0 +1,98 @@
+<section class="select-goal">
+  <div class="container">
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-bar__step" [class.progress-bar__step--active]="currentStep() >= 1">
+        <span class="progress-bar__dot">1</span>
+        <span class="progress-bar__label">Category</span>
+      </div>
+      <div class="progress-bar__line" [class.progress-bar__line--active]="currentStep() >= 2"></div>
+      <div class="progress-bar__step" [class.progress-bar__step--active]="currentStep() >= 2">
+        <span class="progress-bar__dot">2</span>
+        <span class="progress-bar__label">Select</span>
+      </div>
+      <div class="progress-bar__line" [class.progress-bar__line--active]="false"></div>
+      <div class="progress-bar__step">
+        <span class="progress-bar__dot">3</span>
+        <span class="progress-bar__label">Your Box</span>
+      </div>
+    </div>
+
+    <!-- STEP 1: Choose Category -->
+    @if (currentStep() === 1) {
+      <div class="step-content animate-fade-in-up">
+        <div class="text-center">
+          <span class="section-label">Step 1</span>
+          <h1 class="section-title">What Are You Looking For?</h1>
+          <p class="section-subtitle">Tell us how you'd like us to personalize your fruit box</p>
+        </div>
+
+        <div class="category-grid">
+          <button class="category-card" (click)="selectCategory('goal')">
+            <span class="category-card__icon">🎯</span>
+            <h2 class="category-card__title">Health Goal</h2>
+            <p class="category-card__desc">I want to achieve a specific health outcome like immunity, weight loss, or better skin</p>
+            <span class="category-card__arrow">→</span>
+          </button>
+
+          <button class="category-card" (click)="selectCategory('deficiency')">
+            <span class="category-card__icon">🧬</span>
+            <h2 class="category-card__title">Nutritional Deficiency</h2>
+            <p class="category-card__desc">I know I'm lacking a specific nutrient like Vitamin C, Iron, or Potassium</p>
+            <span class="category-card__arrow">→</span>
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- STEP 2: Select Specific Goal / Deficiency -->
+    @if (currentStep() === 2) {
+      <div class="step-content animate-fade-in-up">
+        <div class="text-center">
+          <span class="section-label">Step 2</span>
+          @if (category() === 'goal') {
+            <h1 class="section-title">Choose Your Health Goal</h1>
+            <p class="section-subtitle">Select the goal that matters most to you right now</p>
+          } @else {
+            <h1 class="section-title">What Nutrient Do You Need?</h1>
+            <p class="section-subtitle">We'll pack your box with fruits rich in this nutrient</p>
+          }
+        </div>
+
+        <div class="goals-grid">
+          @if (category() === 'goal') {
+            @for (goal of healthGoals; track goal.id) {
+              <app-goal-card
+                [goal]="goal"
+                [selected]="selectedId() === goal.id"
+                (goalSelected)="selectGoal($event)"
+              ></app-goal-card>
+            }
+          } @else {
+            @for (def of deficiencies; track def.id) {
+              <app-goal-card
+                [goal]="def"
+                [selected]="selectedId() === def.id"
+                (goalSelected)="selectGoal($event)"
+              ></app-goal-card>
+            }
+          }
+        </div>
+
+        <!-- Actions -->
+        <div class="step-actions">
+          <button class="btn btn-secondary" (click)="goBack()">← Back</button>
+          <button
+            class="btn btn-primary btn-lg"
+            [disabled]="!selectedId()"
+            (click)="proceed()"
+          >
+            See Your Box →
+          </button>
+        </div>
+      </div>
+    }
+
+  </div>
+</section>

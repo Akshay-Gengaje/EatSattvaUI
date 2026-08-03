@@ -1,0 +1,237 @@
+<section class="login-page">
+  <!-- Decorative Background -->
+  <div class="login-bg">
+    <div class="login-bg__orb login-bg__orb--1"></div>
+    <div class="login-bg__orb login-bg__orb--2"></div>
+    <div class="login-bg__orb login-bg__orb--3"></div>
+    <div class="login-bg__pattern"></div>
+  </div>
+
+  <div class="login-container">
+    <!-- Left Panel — Branding -->
+    <div class="login-branding">
+      <div class="login-branding__content">
+        <div class="login-branding__badge">
+          <span class="login-branding__leaf">🍃</span>
+          <span>EatSattva</span>
+        </div>
+        <h1 class="login-branding__title">Welcome back to <span class="login-branding__highlight">healthy living</span></h1>
+        <p class="login-branding__text">Sign in to access your personalized fruit boxes, track deliveries, and manage your wellness journey.</p>
+
+        <div class="login-branding__features">
+          <div class="login-branding__feature">
+            <span class="login-branding__feature-icon">🎯</span>
+            <div>
+              <strong>Personalized Boxes</strong>
+              <span>Curated for your health goals</span>
+            </div>
+          </div>
+          <div class="login-branding__feature">
+            <span class="login-branding__feature-icon">📦</span>
+            <div>
+              <strong>Track Orders</strong>
+              <span>Real-time delivery updates</span>
+            </div>
+          </div>
+          <div class="login-branding__feature">
+            <span class="login-branding__feature-icon">🧑‍⚕️</span>
+            <div>
+              <strong>Nutritionist Advice</strong>
+              <span>Expert-guided recommendations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative floating fruits -->
+      <div class="login-branding__floaters">
+        <span class="login-branding__float login-branding__float--1">🍎</span>
+        <span class="login-branding__float login-branding__float--2">🥭</span>
+        <span class="login-branding__float login-branding__float--3">🍇</span>
+        <span class="login-branding__float login-branding__float--4">🍊</span>
+        <span class="login-branding__float login-branding__float--5">🫐</span>
+      </div>
+    </div>
+
+    <!-- Right Panel — Login Form -->
+    <div class="login-form-panel">
+      <div class="login-form-wrapper">
+        <div class="login-form-header">
+          <h2 class="login-form-header__title">Sign in</h2>
+          <p class="login-form-header__subtitle">Enter your credentials to continue</p>
+        </div>
+
+        <!-- Login Method Toggle -->
+        <div class="login-toggle" id="login-method-toggle">
+          <button
+            class="login-toggle__btn"
+            [class.login-toggle__btn--active]="loginMethod() === 'email'"
+            (click)="switchLoginMethod('email')"
+            type="button"
+            id="login-toggle-email"
+          >
+            <svg class="login-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="3"/>
+              <polyline points="22,7 12,14 2,7"/>
+            </svg>
+            Email
+          </button>
+          <button
+            class="login-toggle__btn"
+            [class.login-toggle__btn--active]="loginMethod() === 'phone'"
+            (click)="switchLoginMethod('phone')"
+            type="button"
+            id="login-toggle-phone"
+          >
+            <svg class="login-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="3"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+            Phone
+          </button>
+          <div class="login-toggle__slider" [class.login-toggle__slider--right]="loginMethod() === 'phone'"></div>
+        </div>
+
+        <!-- Error Message -->
+        @if (errorMessage()) {
+          <div class="login-error" id="login-error-message">
+            <svg class="login-error__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+            <span>{{ errorMessage() }}</span>
+          </div>
+        }
+
+        <!-- Login Form -->
+        <form class="login-form" (ngSubmit)="onSubmit()" id="login-form">
+          <!-- Email / Mobile Input -->
+          <div class="login-field">
+            <label class="login-field__label" for="login-identifier">
+              {{ loginMethod() === 'email' ? 'Email Address' : 'Mobile Number' }}
+            </label>
+            <div class="login-field__input-wrapper">
+              @if (loginMethod() === 'email') {
+                <svg class="login-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="3"/>
+                  <polyline points="22,7 12,14 2,7"/>
+                </svg>
+              } @else {
+                <svg class="login-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="3"/>
+                  <line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+              }
+              <input
+                class="login-field__input"
+                [type]="loginMethod() === 'email' ? 'email' : 'tel'"
+                [placeholder]="loginMethod() === 'email' ? 'you@example.com' : '9876543210'"
+                [ngModel]="email()"
+                (ngModelChange)="email.set($event)"
+                name="identifier"
+                id="login-identifier"
+                autocomplete="username"
+              />
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="login-field">
+            <label class="login-field__label" for="login-password">Password</label>
+            <div class="login-field__input-wrapper">
+              <svg class="login-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input
+                class="login-field__input"
+                [type]="showPassword() ? 'text' : 'password'"
+                placeholder="Enter your password"
+                [ngModel]="password()"
+                (ngModelChange)="password.set($event)"
+                name="password"
+                id="login-password"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="login-field__toggle"
+                (click)="togglePasswordVisibility()"
+                id="login-password-toggle"
+                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+              >
+                @if (showPassword()) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
+                } @else {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                }
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="login-options">
+            <label class="login-checkbox" for="login-remember">
+              <input
+                type="checkbox"
+                id="login-remember"
+                [ngModel]="rememberMe()"
+                (ngModelChange)="rememberMe.set($event)"
+                name="rememberMe"
+              />
+              <span class="login-checkbox__mark"></span>
+              <span class="login-checkbox__text">Remember me</span>
+            </label>
+            <a href="#" class="login-forgot" id="login-forgot-password">Forgot password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="login-submit"
+            [class.login-submit--loading]="isLoading()"
+            [disabled]="isLoading()"
+            id="login-submit-btn"
+          >
+            @if (isLoading()) {
+              <span class="login-submit__spinner"></span>
+              <span>Signing in...</span>
+            } @else {
+              <span>Sign In</span>
+              <svg class="login-submit__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            }
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="login-divider">
+          <span class="login-divider__line"></span>
+          <span class="login-divider__text">New to EatSattva?</span>
+          <span class="login-divider__line"></span>
+        </div>
+
+        <!-- Sign Up Link -->
+        <a routerLink="/signup" class="login-signup" id="login-signup-link">
+          <span>Create an account</span>
+          <svg class="login-signup__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="8.5" cy="7" r="4"/>
+            <line x1="20" y1="8" x2="20" y2="14"/>
+            <line x1="23" y1="11" x2="17" y2="11"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

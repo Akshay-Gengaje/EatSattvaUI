@@ -1,0 +1,132 @@
+<section class="box-preview">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="box-preview__header animate-fade-in-up">
+      <button class="btn btn-secondary btn-sm" (click)="goBack()">← Change Goal</button>
+      <div class="text-center">
+        <span class="section-label">Your Personalized Box</span>
+        <h1 class="section-title">
+          @if (selectedGoal(); as goal) {
+            {{ goal.icon }} {{ goal.name }}
+          } @else {
+            Your Fruit Box
+          }
+        </h1>
+        <p class="section-subtitle" style="margin-bottom: 0;">
+          Nutritionist-curated fruits perfectly matched to your health needs
+        </p>
+      </div>
+      <div style="width: 120px;"></div>
+    </div>
+
+    <div class="box-preview__layout">
+
+      <!-- Left: Fruits Grid -->
+      <div class="box-preview__fruits animate-fade-in-up" style="animation-delay: 0.1s">
+        <h2 class="box-preview__sub-title">
+          📦 What's In Your Box
+          <span class="badge badge-primary">{{ curatedFruits().length }} fruits</span>
+        </h2>
+
+        <div class="box-fruits-grid">
+          @for (fruit of curatedFruits(); track fruit.id) {
+            <div class="box-fruit-item">
+              <div class="box-fruit-item__emoji-wrap" [style.background]="'radial-gradient(circle, ' + fruit.color + '18 0%, ' + fruit.color + '05 70%)'">
+                <span class="box-fruit-item__emoji">{{ fruit.emoji }}</span>
+              </div>
+              <div class="box-fruit-item__info">
+                <strong class="box-fruit-item__name">{{ fruit.name }}</strong>
+                <span class="box-fruit-item__qty">{{ fruit.quantityGrams }}g</span>
+              </div>
+              <span class="box-fruit-item__nutrient badge badge-primary">{{ fruit.nutrients[0] }} ✦</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Right: Summary Panel -->
+      <div class="box-preview__sidebar animate-fade-in-up" style="animation-delay: 0.2s">
+
+        <!-- Nutritional Summary -->
+        <div class="nutrition-panel card">
+          <h3 class="nutrition-panel__title">🧪 Nutritional Coverage</h3>
+          <div class="nutrition-panel__bars">
+            @for (n of nutrientsCovered(); track n.name) {
+              <div class="nutrition-bar">
+                <div class="nutrition-bar__header">
+                  <span class="nutrition-bar__icon">{{ n.icon }}</span>
+                  <span class="nutrition-bar__name">{{ n.name }}</span>
+                  <span class="nutrition-bar__pct">{{ n.percentage }}%</span>
+                </div>
+                <div class="nutrition-bar__track">
+                  <div
+                    class="nutrition-bar__fill"
+                    [style.width.%]="n.percentage"
+                    [style.background]="n.percentage >= 70 ? 'var(--success)' : n.percentage >= 40 ? 'var(--accent)' : 'var(--secondary)'"
+                  ></div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Price Card -->
+        <div class="price-card card">
+          <h3 class="price-card__title">💰 Price Breakdown</h3>
+
+          <div class="price-card__row">
+            <span>Box price ({{ totalWeight() / 1000 }}kg)</span>
+            <span>₹{{ boxPrice() | number:'1.0-0' }}</span>
+          </div>
+
+          <div class="price-card__row">
+            <span>Delivery</span>
+            @if (isMonthlyPlan()) {
+              <span class="price-card__free">FREE</span>
+            } @else {
+              <span>₹{{ deliveryFee }}</span>
+            }
+          </div>
+
+          <div class="price-card__divider"></div>
+
+          <div class="price-card__row price-card__row--total">
+            <span>Total</span>
+            <span>₹{{ totalPrice() | number:'1.0-0' }}</span>
+          </div>
+
+          <!-- Plan Toggle -->
+          <div class="plan-toggle">
+            <button
+              class="plan-toggle__btn"
+              [class.plan-toggle__btn--active]="!isMonthlyPlan()"
+              (click)="boxService.setPlan(false)"
+            >Weekly</button>
+            <button
+              class="plan-toggle__btn"
+              [class.plan-toggle__btn--active]="isMonthlyPlan()"
+              (click)="boxService.setPlan(true)"
+            >Monthly ✨</button>
+          </div>
+
+          @if (!isMonthlyPlan()) {
+            <div class="upsell-card">
+              <span class="upsell-card__icon">💡</span>
+              <div class="upsell-card__text">
+                <strong>Save with Monthly!</strong>
+                <span>Free delivery + Free nutritionist consultation</span>
+              </div>
+            </div>
+          }
+
+          <button class="btn btn-primary btn-lg price-card__cta" (click)="proceedToCheckout()">
+            Proceed to Checkout →
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

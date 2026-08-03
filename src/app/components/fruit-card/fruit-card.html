@@ -1,0 +1,22 @@
+<article class="fruit-card">
+  <!-- Emoji area -->
+  <div
+    class="fruit-card__emoji-wrap"
+    [style.background]="'radial-gradient(circle, ' + fruit().color + '20 0%, ' + fruit().color + '08 70%)'"
+  >
+    <span class="fruit-card__emoji">{{ fruit().emoji }}</span>
+  </div>
+
+  <!-- Info -->
+  <div class="fruit-card__body">
+    <h3 class="fruit-card__name">{{ fruit().name }}</h3>
+    <p class="fruit-card__tagline">{{ fruit().tagline }}</p>
+  </div>
+
+  <!-- Nutrient badges -->
+  <div class="fruit-card__nutrients">
+    @for (nutrient of fruit().nutrients; track nutrient) {
+      <span class="badge badge-primary fruit-card__badge">{{ nutrient }}</span>
+    }
+  </div>
+</article>

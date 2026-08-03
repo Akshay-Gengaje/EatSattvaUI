@@ -1,0 +1,223 @@
+/* ============================================================
+   Select Goal Page
+   ============================================================ */
+
+.select-goal {
+  min-height: 100vh;
+  padding: calc(72px + var(--space-2xl)) 0 var(--space-4xl);
+  background: var(--bg-primary);
+}
+
+/* ---------- Progress Bar ---------- */
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: var(--space-3xl);
+  padding: 0 var(--space-xl);
+}
+
+.progress-bar__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.progress-bar__dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  color: var(--text-light);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  border: 2px solid var(--border);
+}
+
+.progress-bar__step--active .progress-bar__dot {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+.progress-bar__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color var(--transition-base);
+}
+
+.progress-bar__step--active .progress-bar__label {
+  color: var(--primary);
+}
+
+.progress-bar__line {
+  width: 80px;
+  height: 2px;
+  background: var(--border);
+  margin: 0 var(--space-sm);
+  margin-bottom: 20px;
+  transition: background var(--transition-base);
+  border-radius: var(--radius-full);
+}
+
+.progress-bar__line--active {
+  background: var(--primary);
+}
+
+/* ---------- Step Content ---------- */
+.step-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------- Category Cards ---------- */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+.category-card {
+  background: var(--white);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl) var(--space-xl);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(74, 124, 89, 0.03), rgba(232, 128, 90, 0.03));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.category-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.category-card:hover::before {
+  opacity: 1;
+}
+
+.category-card__icon {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.category-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.category-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-body);
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.category-card__arrow {
+  font-size: var(--fs-xl);
+  color: var(--primary);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all var(--transition-base);
+}
+
+.category-card:hover .category-card__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---------- Goals Grid ---------- */
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+}
+
+/* ---------- Step Actions ---------- */
+.step-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border-light);
+}
+
+.step-actions .btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .goals-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .progress-bar__line {
+    width: 40px;
+  }
+
+  .step-actions {
+    flex-direction: column-reverse;
+    gap: var(--space-md);
+  }
+
+  .step-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .goals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .progress-bar__label {
+    display: none;
+  }
+
+  .progress-bar__line {
+    margin-bottom: 0;
+  }
+}

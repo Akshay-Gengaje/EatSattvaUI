@@ -10,6 +10,13 @@ export interface Fruit {
   goals: string[];
   deficiencies: string[];
   color: string;
+  // Protein Meal extensions
+  proteinGrams?: number;
+  carbsGrams?: number;
+  fatGrams?: number;
+  calories?: number;
+  dietaryType?: 'veg' | 'non-veg' | 'eggetarian';
+  tier?: 'essential' | 'pro' | 'elite';
 }
 
 export interface HealthGoal {
@@ -36,6 +43,11 @@ export interface FruitBox {
   deliveryFee: number;
   totalWeight: number;
   nutrientsCovered: NutrientCoverage[];
+  // Protein Meal extensions
+  totalProteinGrams?: number;
+  totalCalories?: number;
+  planType?: string;
+  isTrial?: boolean;
 }
 
 export interface NutrientCoverage {
@@ -47,6 +59,8 @@ export interface NutrientCoverage {
 export interface Testimonial {
   id: string;
   name: string;
+  role?: string;
+  incomeSegment?: string;
   avatar: string;
   rating: number;
   review: string;
@@ -64,4 +78,20 @@ export interface PricingPlan {
   highlighted: boolean;
   badge?: string;
   cta: string;
+  targetedAudience?: string;
+  salaryRange?: string;
+  dailyPrice?: string;
+  isTrial?: boolean;
 }
+
+export interface PersonaTarget {
+  id: string;
+  title: string;
+  icon: string;
+  badge: string;
+  subtitle: string;
+  benefits: string[];
+  suggestedPlan: string;
+  bgGradient: string;
+}
+

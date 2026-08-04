@@ -12,15 +12,18 @@ import { GoalCard } from '../../components/goal-card/goal-card';
 })
 export class SelectGoalComponent {
   private fruitService = inject(FruitService);
-  private boxService = inject(BoxService);
+  readonly boxService = inject(BoxService);
   private router = inject(Router);
 
   readonly healthGoals = this.fruitService.healthGoals;
   readonly deficiencies = this.fruitService.deficiencies;
+  readonly pricingPlans = this.fruitService.pricingPlans;
 
   readonly currentStep = signal(1);
-  readonly category = signal<'goal' | 'deficiency' | null>(null);
-  readonly selectedId = signal<string | null>(null);
+  readonly category = signal<'goal' | 'deficiency' | null>('goal');
+  readonly selectedGoalId = signal<string | null>('muscle-gain');
+  readonly selectedPlanId = signal<string>(this.boxService.selectedPlanId());
+  readonly consultationChoice = signal<'ai' | 'human'>(this.boxService.consultationType());
 
   selectCategory(cat: 'goal' | 'deficiency'): void {
     this.category.set(cat);
@@ -28,23 +31,35 @@ export class SelectGoalComponent {
   }
 
   selectGoal(id: string): void {
-    this.selectedId.set(id);
+    this.selectedGoalId.set(id);
+  }
+
+  selectConsultation(type: 'ai' | 'human'): void {
+    this.consultationChoice.set(type);
+    this.boxService.setConsultationType(type);
+  }
+
+  selectPlan(planId: string): void {
+    this.selectedPlanId.set(planId);
+    this.boxService.selectPlan(planId);
   }
 
   goBack(): void {
     if (this.currentStep() === 2) {
       this.currentStep.set(1);
-      this.category.set(null);
-      this.selectedId.set(null);
     }
   }
 
-  proceed(): void {
-    const cat = this.category();
-    const id = this.selectedId();
-    if (cat && id) {
-      this.boxService.selectGoal(cat, id);
-      this.router.navigate(['/box-preview']);
-    }
+  proceedToStep2(): void {
+    this.currentStep.set(2);
+  }
+
+  proceedToBox(): void {
+    const cat = this.category() || 'goal';
+    const goalId = this.selectedGoalId() || 'muscle-gain';
+    this.boxService.selectGoal(cat, goalId);
+    this.boxService.selectPlan(this.selectedPlanId());
+    this.boxService.setConsultationType(this.consultationChoice());
+    this.router.navigate(['/box-preview']);
   }
 }

@@ -18,25 +18,38 @@
   <div class="container hero__container">
     <!-- Left content -->
     <div class="hero__content">
-      <span class="badge badge-primary hero__badge animate-fade-in-up">🍃 Nutritionist-Guided Wellness</span>
+      <span class="badge badge-gold hero__badge animate-fade-in-up">🔥 Chef-Crafted High-Protein Meals for Everyone</span>
 
       <h1 class="hero__heading animate-fade-in-up" style="animation-delay: 0.1s">
-        Eat Smart.<br>
-        <span class="hero__heading-accent">Live Sattva.</span>
+        Eat Healthy.<br>
+        <span class="hero__heading-accent">High-Protein Sattva Meals.</span>
       </h1>
 
       <p class="hero__subtext animate-fade-in-up" style="animation-delay: 0.2s">
-        Personalized fruit boxes curated by expert nutritionists, based on your health goals.
-        Fresh, seasonal, delivered weekly.
+        Macro-balanced, gourmet protein meal boxes (35g–55g protein) custom-curated by expert nutritionists &amp; gourmet chefs. Fresh, delicious, zero cooking needed.
       </p>
 
+      <!-- Flagship 5-Day Trial Callout -->
+      <div class="trial-hero-card animate-fade-in-up" style="animation-delay: 0.25s; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 2px solid #F59E0B; border-radius: 16px; padding: 16px 20px; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="margin: 0 0 2px 0; color: #FFF; font-size: 1.25rem;">5-Days Protein Trial Plan</h3>
+            <p style="margin: 0; color: #CBD5E1; font-size: 0.88rem;">Experience gourmet taste, clean macros &amp; nutritionist customization for 5 days!</p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 1.6rem; font-weight: 800; color: #F59E0B;">₹1,495</div>
+            <div style="font-size: 0.75rem; color: #94A3B8;">₹299 × 5 days · Scratch Code Promo at Checkout</div>
+          </div>
+        </div>
+      </div>
+
       <div class="hero__actions animate-fade-in-up" style="animation-delay: 0.3s">
-        <a routerLink="/select-goal" class="btn btn-primary btn-lg">Get Your Box →</a>
-        <button class="btn btn-secondary btn-lg" (click)="scrollTo('how-it-works')">How It Works ↓</button>
+        <button (click)="selectPlanAndCheckout('5-day-trial')" class="btn btn-primary btn-lg" style="background: linear-gradient(135deg, #F59E0B, #D97706); border: none; color: #000; font-weight: 700;">Claim 5-Day Trial (₹1,495) →</button>
+        <button class="btn btn-secondary btn-lg" (click)="scrollTo('pricing')">View All Plans ↓</button>
       </div>
 
       <p class="hero__trust animate-fade-in-up" style="animation-delay: 0.4s">
-        ✦ 2,000+ happy customers · 🚚 Free delivery for subscribers
+        ✦ 35g–55g Guaranteed Protein · 🧑‍⚕️ Expert Nutritionist Guidance · 🚚 Doorstep Delivery
       </p>
     </div>
 
@@ -58,21 +71,59 @@
 </section>
 
 <!-- ============================================================
+     EXPERT NUTRITIONIST & CHEF CUSTOMIZATION SECTION
+     ============================================================ -->
+<section class="section target-audience" id="ai-nutritionist" style="background: var(--bg-primary);">
+  <div class="container text-center">
+    <span class="section-label">Tailored Nutrition</span>
+    <h2 class="section-title">Expert Nutritionist &amp; Chef Customization</h2>
+    <p class="section-subtitle">Every meal box is scientifically calculated to match your body metrics and daily protein goals</p>
+
+    <div class="personas-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 32px; text-align: left;">
+      @for (p of personas; track p.id) {
+        <div class="persona-card card" [style.background]="p.bgGradient" style="color: #FFF; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span style="font-size: 3rem;">{{ p.icon }}</span>
+              <span class="badge" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1px solid rgba(255,255,255,0.2);">{{ p.badge }}</span>
+            </div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 8px; color: #FFF;">{{ p.title }}</h3>
+            <p style="color: #94A3B8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">{{ p.subtitle }}</p>
+
+            <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
+              @for (b of p.benefits; track b) {
+                <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.9rem; color: #E2E8F0;">
+                  <span style="color: #10B981; font-weight: bold;">✓</span> {{ b }}
+                </li>
+              }
+            </ul>
+          </div>
+
+          <button (click)="scrollTo('pricing')" class="btn" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1px solid rgba(255,255,255,0.3); text-align: center; width: 100%;">
+            Customize Your Plan →
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      HOW IT WORKS SECTION
      ============================================================ -->
 <section class="section how-it-works" id="how-it-works" style="background: var(--bg-secondary);">
   <div class="container text-center">
-    <span class="section-label">Simple &amp; Easy</span>
+    <span class="section-label">Simple &amp; Seamless</span>
     <h2 class="section-title">How EatSattva Works</h2>
-    <p class="section-subtitle">Three easy steps to your personalized fruit box</p>
+    <p class="section-subtitle">Three easy steps to effortless, clean daily nutrition</p>
 
     <div class="steps">
       <!-- Step 1 -->
       <div class="step-card card">
         <div class="step-card__number">1</div>
         <div class="step-card__icon">🎯</div>
-        <h3 class="step-card__title">Choose Your Goal</h3>
-        <p class="step-card__desc">Select a health goal or nutritional deficiency you want to address</p>
+        <h3 class="step-card__title">Goal &amp; Nutrition Setup</h3>
+        <p class="step-card__desc">Choose your health target (Energy, Muscle, Fat Loss) and customize your daily protein needs</p>
       </div>
 
       <!-- Dashed connector -->
@@ -81,9 +132,9 @@
       <!-- Step 2 -->
       <div class="step-card card">
         <div class="step-card__number">2</div>
-        <div class="step-card__icon">🧑‍⚕️</div>
-        <h3 class="step-card__title">Nutritionist Curates Your Box</h3>
-        <p class="step-card__desc">Our expert nutritionists pick the best seasonal fruits matched to your nutritional needs</p>
+        <div class="step-card__icon">🧑‍🍳</div>
+        <h3 class="step-card__title">Chef &amp; Nutritionist Prep</h3>
+        <p class="step-card__desc">Gourmet chefs cook fresh protein boxes with exact verified macros (35g - 55g protein)</p>
       </div>
 
       <!-- Dashed connector -->
@@ -93,70 +144,76 @@
       <div class="step-card card">
         <div class="step-card__number">3</div>
         <div class="step-card__icon">📦</div>
-        <h3 class="step-card__title">Delivered Fresh</h3>
-        <p class="step-card__desc">Get your personalized fruit box delivered to your doorstep weekly</p>
+        <h3 class="step-card__title">Delivered Hot &amp; Fresh</h3>
+        <p class="step-card__desc">Get your personalized meal box delivered daily to your doorstep in your preferred slot</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SEASONAL FRUITS SECTION
+     PROTEIN MENU SHOWCASE SECTION
      ============================================================ -->
-<section class="section seasonal-fruits">
+<section class="section seasonal-fruits" id="menu">
   <div class="container text-center">
-    <span class="section-label">Fresh Picks</span>
-    <h2 class="section-title">This Season's Best</h2>
-    <p class="section-subtitle">Hand-picked seasonal fruits for maximum nutrition</p>
+    <span class="section-label">High Protein Menu</span>
+    <h2 class="section-title">Gourmet High-Protein Boxes</h2>
+    <p class="section-subtitle">Handcrafted macro meals packed with 35g to 52g clean protein per serving</p>
 
     <div class="fruits-grid">
-      @for (fruit of seasonalFruits(); track fruit.id) {
-        <app-fruit-card [fruit]="fruit"></app-fruit-card>
+      @for (meal of proteinMeals(); track meal.id) {
+        <app-fruit-card [fruit]="meal"></app-fruit-card>
       }
     </div>
 
-    <a routerLink="/fruits" class="fruits-grid__link">View All Fruits →</a>
+    <a routerLink="/select-goal" class="fruits-grid__link" style="margin-top: 24px; display: inline-block;">Customize Your High-Protein Box →</a>
   </div>
 </section>
 
 <!-- ============================================================
-     PRICING SECTION
+     PRICING TIERS SECTION
      ============================================================ -->
 <section class="section pricing" id="pricing" style="background: var(--bg-secondary);">
   <div class="container text-center">
-    <span class="section-label">Pricing</span>
-    <h2 class="section-title">Choose Your Plan</h2>
-    <p class="section-subtitle">Flexible options that fit your lifestyle</p>
+    <span class="section-label">Transparent Plans</span>
+    <h2 class="section-title">Choose Your Meal Plan or Start 5-Day Trial</h2>
+    <p class="section-subtitle">Flexible options designed to fit every lifestyle & daily protein target</p>
 
-    <div class="pricing-grid">
+    <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));">
       @for (plan of pricingPlans; track plan.id) {
-        <div class="pricing-card" [class.pricing-card--highlighted]="plan.highlighted">
-          @if (plan.badge) {
-            <span class="pricing-card__badge badge badge-gold">{{ plan.badge }}</span>
-          }
-          <h3 class="pricing-card__name">{{ plan.name }}</h3>
-          <p class="pricing-card__desc">{{ plan.description }}</p>
-          <div class="pricing-card__price">{{ plan.price }}</div>
-          <p class="pricing-card__subtext">{{ plan.priceSubtext }}</p>
-          <ul class="pricing-card__features">
-            @for (feature of plan.features; track feature) {
-              <li class="pricing-card__feature">
-                <span class="pricing-card__check">✓</span>
-                {{ feature }}
-              </li>
+        <div class="pricing-card" [class.pricing-card--highlighted]="plan.highlighted" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            @if (plan.badge) {
+              <span class="pricing-card__badge badge badge-gold">{{ plan.badge }}</span>
             }
-          </ul>
-          <a
-            routerLink="/select-goal"
+            <h3 class="pricing-card__name" style="margin-top: 10px;">{{ plan.name }}</h3>
+            <p class="pricing-card__desc">{{ plan.description }}</p>
+
+            <div class="pricing-card__price" style="font-size: 2.2rem; font-weight: 800;">{{ plan.price }}</div>
+            <p class="pricing-card__subtext" style="font-weight: 600; color: var(--primary-color);">{{ plan.priceSubtext }}</p>
+
+            <ul class="pricing-card__features" style="text-align: left; margin: 20px 0;">
+              @for (feature of plan.features; track feature) {
+                <li class="pricing-card__feature">
+                  <span class="pricing-card__check">✓</span>
+                  {{ feature }}
+                </li>
+              }
+            </ul>
+          </div>
+
+          <button
+            (click)="selectPlanAndCheckout(plan.id)"
             class="btn"
             [class.btn-primary]="plan.highlighted"
             [class.btn-outline]="!plan.highlighted"
-          >{{ plan.cta }}</a>
+            style="width: 100%; margin-top: 16px;"
+          >{{ plan.cta }}</button>
         </div>
       }
     </div>
 
-    <p class="pricing__note">All plans include expert nutritionist curation &amp; seasonal freshness guarantee</p>
+    <p class="pricing__note" style="margin-top: 24px;">All trial &amp; subscription plans include verified macro guarantee, AI customization, &amp; pause capability.</p>
   </div>
 </section>
 
@@ -165,17 +222,19 @@
      ============================================================ -->
 <section class="section testimonials">
   <div class="container text-center">
-    <span class="section-label">Love Letters</span>
-    <h2 class="section-title">What Our Customers Say</h2>
+    <span class="section-label">Real Feedback</span>
+    <h2 class="section-title">Loved by Thousands</h2>
+    <p class="section-subtitle">See how our customers eat healthy every day with EatSattva Protein</p>
 
     <div class="testimonials-grid">
       @for (t of testimonials; track t.id) {
-        <div class="testimonial-card card">
+        <div class="testimonial-card card" style="text-align: left;">
           <div class="testimonial-card__header">
             <span class="testimonial-card__avatar">{{ t.avatar }}</span>
             <div class="testimonial-card__info">
               <strong class="testimonial-card__name">{{ t.name }}</strong>
-              <span class="testimonial-card__city">{{ t.city }}</span>
+              <div style="font-size: 0.8rem; color: #F59E0B; font-weight: 600;">{{ t.incomeSegment }}</div>
+              <span class="testimonial-card__city">{{ t.city }} · {{ t.role }}</span>
             </div>
             <span class="badge badge-primary testimonial-card__goal">{{ t.goal }}</span>
           </div>
@@ -196,17 +255,17 @@
      ============================================================ -->
 <section class="cta-banner gradient-primary">
   <!-- Decorative side emojis -->
-  <span class="cta-banner__emoji cta-banner__emoji--left-1" aria-hidden="true">🍎</span>
-  <span class="cta-banner__emoji cta-banner__emoji--left-2" aria-hidden="true">🥝</span>
-  <span class="cta-banner__emoji cta-banner__emoji--right-1" aria-hidden="true">🍇</span>
-  <span class="cta-banner__emoji cta-banner__emoji--right-2" aria-hidden="true">🍊</span>
+  <span class="cta-banner__emoji cta-banner__emoji--left-1" aria-hidden="true">🥩</span>
+  <span class="cta-banner__emoji cta-banner__emoji--left-2" aria-hidden="true">🍗</span>
+  <span class="cta-banner__emoji cta-banner__emoji--right-1" aria-hidden="true">🫛</span>
+  <span class="cta-banner__emoji cta-banner__emoji--right-2" aria-hidden="true">🍳</span>
 
   <div class="container text-center cta-banner__content">
     <h2 class="cta-banner__heading">
       Ready to Start Your<br>
-      Health Journey?
+      5-Day High-Protein Trial?
     </h2>
-    <p class="cta-banner__subtext">Join 2,000+ happy customers eating smarter every week</p>
-    <a routerLink="/select-goal" class="btn cta-banner__btn">Get Your First Box →</a>
+    <p class="cta-banner__subtext">Get 5 days of chef-cooked macro protein meals delivered to your doorstep for just ₹1,495</p>
+    <button (click)="selectPlanAndCheckout('5-day-trial')" class="btn cta-banner__btn" style="background: #FFF; color: #000; font-weight: 700;">Claim 5-Day Trial (₹1,495) →</button>
   </div>
 </section>

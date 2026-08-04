@@ -17,15 +17,12 @@ export class BoxPreviewComponent {
   readonly curatedFruits = this.boxService.curatedFruits;
   readonly boxPrice = this.boxService.boxPrice;
   readonly totalPrice = this.boxService.totalPrice;
-  readonly totalWeight = this.boxService.totalWeight;
   readonly nutrientsCovered = this.boxService.nutrientsCovered;
-  readonly isMonthlyPlan = this.boxService.isMonthlyPlan;
-  readonly deliveryFee = this.boxService.deliveryFee;
-
-
-  togglePlan(): void {
-    this.boxService.togglePlan();
-  }
+  readonly selectedPlan = this.boxService.selectedPlan;
+  readonly isTrialPlan = this.boxService.isTrialPlan;
+  readonly totalProteinGrams = this.boxService.totalProteinGrams;
+  readonly avgProteinPerMeal = this.boxService.avgProteinPerMeal;
+  readonly totalCalories = this.boxService.totalCalories;
 
   proceedToCheckout(): void {
     this.router.navigate(['/checkout']);

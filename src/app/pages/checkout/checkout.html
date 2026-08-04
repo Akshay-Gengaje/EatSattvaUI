@@ -6,7 +6,7 @@
         class="confetti-piece"
         [style.--x]="(i * 37 % 100) + '%'"
         [style.--delay]="(i * 0.08) + 's'"
-        [style.--color]="i % 4 === 0 ? 'var(--primary)' : i % 4 === 1 ? 'var(--secondary)' : i % 4 === 2 ? 'var(--accent)' : 'var(--success)'"
+        [style.--color]="i % 4 === 0 ? '#F59E0B' : i % 4 === 1 ? '#10B981' : i % 4 === 2 ? '#3B82F6' : '#EF4444'"
       ></span>
     }
   </div>
@@ -18,44 +18,59 @@
     <!-- Order Placed Success -->
     @if (orderPlaced()) {
       <div class="order-success animate-fade-in-up">
-        <div class="order-success__icon">🎉</div>
-        <h1 class="order-success__title">Order Placed Successfully!</h1>
+        <div class="order-success__icon">🔥</div>
+        <h1 class="order-success__title">High-Protein Meal Order Placed!</h1>
         <p class="order-success__text">
-          Your personalized fruit box is being prepared.
-          @if (isMonthlyPlan()) {
-            <br>Welcome to the Monthly Plan! Enjoy free delivery & nutritionist consultations.
+          @if (isTrialPlan()) {
+            🎉 Congratulations! Your <strong>5-Day High-Protein Trial Plan (₹1,495)</strong> is confirmed.<br>
+            Your chef is preparing Day 1 meal boxes with ~{{ avgProteinPerMeal() }}g clean protein per box.
+          } @else {
+            🎉 Welcome to <strong>{{ selectedPlan().name }}</strong>!<br>
+            Your chef-cooked protein boxes are scheduled for daily delivery.
           }
         </p>
-        <div class="order-success__details card">
+        <div class="order-success__details card" style="text-align: left; max-width: 540px; margin: 24px auto;">
           <div class="order-success__row">
-            <span>📦 Box</span>
-            <span>{{ selectedGoal()?.name }} — {{ curatedFruits().length }} fruits</span>
+            <span>📋 Selected Plan</span>
+            <span style="font-weight: 700; color: #F59E0B;">{{ selectedPlan().name }}</span>
           </div>
           <div class="order-success__row">
-            <span>💰 Total</span>
-            <span class="order-success__price">₹{{ totalPrice() | number:'1.0-0' }}</span>
+            <span>💪 Guaranteed Protein</span>
+            <span class="badge badge-gold">~{{ avgProteinPerMeal() }}g Protein / Meal</span>
           </div>
           <div class="order-success__row">
-            <span>🚚 Delivery</span>
-            <span>{{ deliverySlot === 'morning' ? '7am – 10am' : deliverySlot === 'afternoon' ? '12pm – 3pm' : '5pm – 8pm' }}</span>
+            <span>🚚 Delivery Fee</span>
+            @if (deliveryFee() === 0) {
+              <span style="color: #10B981; font-weight: 700;">FREE (₹0)</span>
+            } @else {
+              <span>₹{{ deliveryFee() }}</span>
+            }
           </div>
           <div class="order-success__row">
-            <span>📍 Address</span>
-            <span>{{ address }}, {{ pincode }}</span>
+            <span>💰 Total Amount Paid</span>
+            <span class="order-success__price" style="color: #F59E0B; font-weight: 800;">₹{{ totalPrice() | number:'1.0-0' }}</span>
+          </div>
+          <div class="order-success__row">
+            <span>⏰ Delivery Slot</span>
+            <span>{{ deliverySlot === 'lunch' ? '☀️ Afternoon (12:30-1:30 PM)' : deliverySlot === 'dinner' ? '🌙 Evening (7:30-8:30 PM)' : '🌅 Morning (7:30-9:00 AM)' }}</span>
+          </div>
+          <div class="order-success__row">
+            <span>📍 Delivery Address</span>
+            <span>{{ name }} ({{ phone }}), {{ address }}{{ companyOrBuilding ? ' [' + companyOrBuilding + ']' : '' }}, {{ pincode }}</span>
           </div>
         </div>
-        <button class="btn btn-primary btn-lg" (click)="goHome()">← Back to Home</button>
+        <button class="btn btn-primary btn-lg" (click)="goHome()" style="background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 700;">← Back to Home</button>
       </div>
     } @else {
 
     <!-- Checkout Form -->
     <div class="checkout__header animate-fade-in-up">
-      <button class="btn btn-secondary btn-sm" (click)="goBack()">← Back to Box</button>
+      <button class="btn btn-secondary btn-sm" (click)="goBack()">← Back to Box Preview</button>
       <div class="text-center">
-        <span class="section-label">Checkout</span>
-        <h1 class="section-title">Complete Your Order</h1>
+        <span class="section-label">Final Checkout</span>
+        <h1 class="section-title">Complete Your High-Protein Order</h1>
       </div>
-      <div style="width: 120px;"></div>
+      <div style="width: 140px;"></div>
     </div>
 
     <div class="checkout__layout">
@@ -63,40 +78,92 @@
       <!-- Left: Forms -->
       <div class="checkout__form animate-fade-in-up" style="animation-delay: 0.1s">
 
+        <!-- SCRATCH CODE COUPON CARD -->
+        <div class="form-section card" style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); border: 2px solid #F59E0B; border-radius: 16px; color: #FFF; padding: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 2rem;">🎰</span>
+              <div>
+                <h3 style="margin: 0; font-size: 1.15rem; color: #FFF;">Scratch Code Coupon</h3>
+                <p style="margin: 2px 0 0 0; font-size: 0.82rem; color: #94A3B8;">Scratch below to reveal a secret promo code to waive delivery fees!</p>
+              </div>
+            </div>
+            @if (isCouponApplied()) {
+              <span class="badge badge-gold" style="font-size: 0.75rem; padding: 4px 10px;">🎉 FREE DELIVERY APPLIED</span>
+            }
+          </div>
+
+          <!-- Scratch Area -->
+          @if (!isScratchRevealed()) {
+            <div
+              (click)="scratchCard()"
+              style="background: linear-gradient(135deg, #D97706, #F59E0B); border: 2px dashed #FFF; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: transform 0.2s ease;"
+              onmouseover="this.style.transform='scale(1.02)'"
+              onmouseout="this.style.transform='scale(1)'"
+            >
+              <div style="font-size: 1.8rem;">🪙 ⚡ 🎁</div>
+              <strong style="color: #000; font-size: 1.1rem; display: block; margin-top: 4px;">CLICK / TAP TO SCRATCH CARD</strong>
+              <span style="color: rgba(0,0,0,0.7); font-size: 0.82rem;">Reveal Secret Free Delivery Code</span>
+            </div>
+          } @else {
+            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10B981; border-radius: 12px; padding: 16px; text-align: center; animate: fade-in;">
+              <span class="badge" style="background: #10B981; color: #FFF; font-weight: 800; font-size: 0.9rem; letter-spacing: 1px;">CODE: FREEDEL</span>
+              <p style="margin: 8px 0 0 0; font-size: 0.9rem; color: #34D399; font-weight: 600;">
+                🎉 Coupon Applied! Delivery fee waived (₹49 → ₹0 Free Delivery).
+              </p>
+            </div>
+          }
+
+          <!-- Manual Code Entry -->
+          <div style="display: flex; gap: 10px; margin-top: 14px;">
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Or enter coupon code (e.g. FREEDEL)"
+              [(ngModel)]="inputCouponCode"
+              style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); color: #FFF; flex: 1;"
+            />
+            <button class="btn btn-secondary" (click)="applyManualCoupon()" style="background: rgba(255,255,255,0.15); color: #FFF; border-color: rgba(255,255,255,0.3);">Apply Code</button>
+          </div>
+          @if (couponError()) {
+            <p style="color: #EF4444; font-size: 0.8rem; margin: 6px 0 0 0;">{{ couponError() }}</p>
+          }
+        </div>
+
         <!-- Delivery Details -->
         <div class="form-section card">
-          <h2 class="form-section__title">📍 Delivery Details</h2>
+          <h2 class="form-section__title">📍 Recipient &amp; Delivery Location</h2>
 
           <div class="form-group">
-            <label class="form-label" for="checkout-name">Full Name</label>
+            <label class="form-label" for="checkout-name">Full Name *</label>
             <input
               id="checkout-name"
               class="form-input"
               type="text"
-              placeholder="Enter your full name"
+              placeholder="e.g. Balaji / Akshay"
               [(ngModel)]="name"
             />
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="checkout-phone">Phone Number</label>
+              <label class="form-label" for="checkout-phone">10-Digit Mobile Number *</label>
               <input
                 id="checkout-phone"
                 class="form-input"
                 type="tel"
-                placeholder="10-digit phone number"
+                placeholder="9876543210"
                 [(ngModel)]="phone"
                 maxlength="10"
               />
             </div>
             <div class="form-group">
-              <label class="form-label" for="checkout-pincode">Pincode</label>
+              <label class="form-label" for="checkout-pincode">Pincode *</label>
               <input
                 id="checkout-pincode"
                 class="form-input"
                 type="text"
-                placeholder="6-digit pincode"
+                placeholder="e.g. 411057"
                 [(ngModel)]="pincode"
                 maxlength="6"
               />
@@ -104,11 +171,22 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="checkout-address">Full Address</label>
+            <label class="form-label" for="checkout-company">Apartment / Office / Landmark (Optional)</label>
+            <input
+              id="checkout-company"
+              class="form-input"
+              type="text"
+              placeholder="e.g. Tower B / Tech Park / Near Central Park"
+              [(ngModel)]="companyOrBuilding"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="checkout-address">Full Delivery Address *</label>
             <textarea
               id="checkout-address"
               class="form-input form-textarea"
-              placeholder="House no., Street, Landmark, City"
+              placeholder="Flat no., Building name, Street, City"
               [(ngModel)]="address"
               rows="3"
             ></textarea>
@@ -117,7 +195,7 @@
 
         <!-- Delivery Slot -->
         <div class="form-section card">
-          <h2 class="form-section__title">🕐 Delivery Slot</h2>
+          <h2 class="form-section__title">⏰ Preferred Delivery Slot</h2>
           <div class="slot-options">
             @for (slot of deliverySlots; track slot.value) {
               <label
@@ -137,37 +215,7 @@
           </div>
         </div>
 
-        <!-- Plan Selection -->
-        <div class="form-section card">
-          <h2 class="form-section__title">📋 Choose Plan</h2>
-          <div class="plan-options">
-            <label
-              class="plan-option"
-              [class.plan-option--active]="!isMonthlyPlan()"
-              (click)="boxService.setPlan(false)"
-            >
-              <div class="plan-option__header">
-                <strong>Weekly (One-time)</strong>
-                <span class="plan-option__price">₹{{ boxPrice() | number:'1.0-0' }} + ₹{{ deliveryFee }} delivery</span>
-              </div>
-              <span class="plan-option__desc">No commitment, pay per box</span>
-            </label>
-            <label
-              class="plan-option plan-option--recommended"
-              [class.plan-option--active]="isMonthlyPlan()"
-              (click)="boxService.setPlan(true)"
-            >
-              <span class="plan-option__badge badge badge-gold">Best Value</span>
-              <div class="plan-option__header">
-                <strong>Monthly Subscription</strong>
-                <span class="plan-option__price">₹999/month (4 boxes)</span>
-              </div>
-              <span class="plan-option__desc">✨ Free delivery + 🧑‍⚕️ Free nutritionist consultation</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Payment -->
+        <!-- Payment Options -->
         <div class="form-section card">
           <h2 class="form-section__title">💳 Payment Method</h2>
           <div class="payment-options">
@@ -191,55 +239,70 @@
 
       </div>
 
-      <!-- Right: Order Summary -->
+      <!-- Right: Order Summary Sidebar -->
       <div class="checkout__summary animate-fade-in-up" style="animation-delay: 0.2s">
         <div class="summary-card card">
           <h3 class="summary-card__title">🛒 Order Summary</h3>
 
           @if (selectedGoal(); as goal) {
-            <div class="summary-card__goal">
+            <div class="summary-card__goal" style="display: flex; align-items: center; gap: 8px; font-weight: 600; margin-bottom: 12px;">
               <span>{{ goal.icon }}</span>
               <span>{{ goal.name }}</span>
             </div>
           }
 
           <div class="summary-card__items">
-            @for (fruit of curatedFruits(); track fruit.id) {
-              <div class="summary-item">
-                <span class="summary-item__emoji">{{ fruit.emoji }}</span>
-                <span class="summary-item__name">{{ fruit.name }}</span>
-                <span class="summary-item__qty">{{ fruit.quantityGrams }}g</span>
+            @for (meal of curatedFruits(); track meal.id) {
+              <div class="summary-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.88rem;">
+                <span>{{ meal.emoji }} {{ meal.name }}</span>
+                <span class="badge badge-gold" style="font-size: 0.72rem;">{{ meal.proteinGrams || 40 }}g Protein</span>
               </div>
             }
           </div>
 
-          <div class="summary-card__divider"></div>
+          <div class="summary-card__divider" style="margin: 16px 0; border-top: 1px dashed var(--border-color);"></div>
 
-          <div class="summary-card__row">
-            <span>Box price</span>
+          <div class="summary-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span>Meal Plan ({{ selectedPlan().name }})</span>
             <span>₹{{ boxPrice() | number:'1.0-0' }}</span>
           </div>
-          <div class="summary-card__row">
-            <span>Delivery</span>
-            @if (isMonthlyPlan()) {
-              <span class="summary-card__free">FREE</span>
+
+          <div class="summary-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span>Nutrition Consultation</span>
+            @if (boxService.nutritionistConsultationFee() === 0) {
+              <span style="color: #10B981; font-weight: 700;">FREE (AI / Included)</span>
             } @else {
-              <span>₹{{ deliveryFee }}</span>
+              <span style="font-weight: 600;">₹{{ boxService.nutritionistConsultationFee() }}</span>
             }
           </div>
 
-          <div class="summary-card__divider"></div>
-
-          <div class="summary-card__row summary-card__row--total">
-            <span>Total</span>
-            <span>₹{{ totalPrice() | number:'1.0-0' }}</span>
+          <div class="summary-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <span>Delivery Charge</span>
+            @if (deliveryFee() === 0) {
+              <span style="color: #10B981; font-weight: 700;">FREE (₹0)</span>
+            } @else {
+              <span style="font-weight: 600;">₹{{ deliveryFee() }}</span>
+            }
           </div>
 
-          @if (isMonthlyPlan()) {
-            <div class="summary-card__perks">
-              <div class="summary-card__perk">🚚 Free delivery on all boxes</div>
-              <div class="summary-card__perk">🧑‍⚕️ Free nutritionist consultation</div>
-              <div class="summary-card__perk">⏸️ Pause or cancel anytime</div>
+          @if (deliveryFee() > 0 && !isScratchRevealed()) {
+            <p style="font-size: 0.78rem; color: #D97706; background: rgba(245, 158, 11, 0.1); padding: 6px 10px; border-radius: 6px; margin: 4px 0 10px 0;">
+              💡 Scratch the coupon card to get <strong>Free Delivery</strong>!
+            </p>
+          }
+
+          <div class="summary-card__divider" style="margin: 16px 0; border-top: 1px solid var(--border-color);"></div>
+
+          <div class="summary-card__row summary-card__row--total" style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800;">
+            <span>Total Payable</span>
+            <span style="color: #F59E0B;">₹{{ totalPrice() | number:'1.0-0' }}</span>
+          </div>
+
+          @if (isTrialPlan()) {
+            <div class="summary-card__perks" style="margin-top: 16px; font-size: 0.8rem; background: rgba(245, 158, 11, 0.1); padding: 12px; border-radius: 10px;">
+              <div class="summary-card__perk">🔥 5 High-Protein Gourmet Meal Boxes</div>
+              <div class="summary-card__perk">💪 35g-48g Protein per serving</div>
+              <div class="summary-card__perk">🧑‍⚕️ AI + Expert Nutritionist guidance</div>
             </div>
           }
 
@@ -247,12 +310,13 @@
             class="btn btn-primary btn-lg summary-card__cta"
             [disabled]="!isFormValid"
             (click)="placeOrder()"
+            style="width: 100%; margin-top: 20px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 700;"
           >
-            Place Order 🎉
+            Confirm Order (₹{{ totalPrice() | number:'1.0-0' }}) 🎉
           </button>
 
           @if (!isFormValid) {
-            <p class="summary-card__hint">Fill all delivery details to place order</p>
+            <p class="summary-card__hint" style="font-size: 0.78rem; color: #EF4444; text-align: center; margin-top: 8px;">Please complete Name, Phone, Address &amp; Pincode</p>
           }
         </div>
       </div>

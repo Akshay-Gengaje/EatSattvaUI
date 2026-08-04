@@ -18,16 +18,25 @@ export class CheckoutComponent {
   readonly curatedFruits = this.boxService.curatedFruits;
   readonly boxPrice = this.boxService.boxPrice;
   readonly totalPrice = this.boxService.totalPrice;
-  readonly totalWeight = this.boxService.totalWeight;
-  readonly isMonthlyPlan = this.boxService.isMonthlyPlan;
   readonly deliveryFee = this.boxService.deliveryFee;
+  readonly selectedPlan = this.boxService.selectedPlan;
+  readonly isTrialPlan = this.boxService.isTrialPlan;
+  readonly avgProteinPerMeal = this.boxService.avgProteinPerMeal;
+  readonly isCouponApplied = this.boxService.isCouponApplied;
+  readonly couponCode = this.boxService.couponCode;
+  readonly isScratchRevealed = this.boxService.isScratchRevealed;
+
+  // Coupon input
+  inputCouponCode = '';
+  couponError = signal<string | null>(null);
 
   // Form fields
   name = '';
   phone = '';
+  companyOrBuilding = '';
   address = '';
   pincode = '';
-  deliverySlot = 'morning';
+  deliverySlot = 'lunch';
   paymentMethod = 'upi';
 
   // State
@@ -35,15 +44,15 @@ export class CheckoutComponent {
   readonly showConfetti = signal(false);
 
   readonly deliverySlots = [
-    { value: 'morning', label: '🌅 Morning (7am – 10am)' },
-    { value: 'afternoon', label: '☀️ Afternoon (12pm – 3pm)' },
-    { value: 'evening', label: '🌇 Evening (5pm – 8pm)' },
+    { value: 'lunch', label: '☀️ Afternoon Lunch Slot (12:30 PM – 1:30 PM)' },
+    { value: 'dinner', label: '🌙 Evening Dinner Slot (7:30 PM – 8:30 PM)' },
+    { value: 'morning', label: '🌅 Morning Breakfast Slot (7:30 AM – 9:00 AM)' },
   ];
 
   readonly paymentMethods = [
-    { value: 'upi', label: '📱 UPI (GPay / PhonePe)', icon: '📱' },
+    { value: 'upi', label: '📱 Instant UPI (GPay / PhonePe / Paytm)', icon: '📱' },
     { value: 'card', label: '💳 Credit / Debit Card', icon: '💳' },
-    { value: 'cod', label: '💵 Cash on Delivery', icon: '💵' },
+    { value: 'cod', label: '💵 Pay on Delivery', icon: '💵' },
   ];
 
   get isFormValid(): boolean {
@@ -51,6 +60,26 @@ export class CheckoutComponent {
       && /^[6-9]\d{9}$/.test(this.phone.trim())
       && this.address.trim().length > 5
       && /^\d{6}$/.test(this.pincode.trim());
+  }
+
+  scratchCard(): void {
+    this.boxService.revealScratchCard();
+    this.showConfetti.set(true);
+    setTimeout(() => this.showConfetti.set(false), 2500);
+  }
+
+  applyManualCoupon(): void {
+    const code = this.inputCouponCode.trim().toUpperCase();
+    if (!code) return;
+
+    if (code === 'FREEDEL' || code === 'SATTVATRIAL' || code === 'SCRATCH500') {
+      this.boxService.applyScratchCoupon(code);
+      this.couponError.set(null);
+      this.showConfetti.set(true);
+      setTimeout(() => this.showConfetti.set(false), 2500);
+    } else {
+      this.couponError.set('Invalid coupon code. Try scratching the card above!');
+    }
   }
 
   placeOrder(): void {

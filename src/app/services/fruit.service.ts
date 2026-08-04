@@ -5,6 +5,7 @@ import {
   Deficiency,
   Testimonial,
   PricingPlan,
+  PersonaTarget,
 } from '../models/fruit.model';
 
 @Injectable({ providedIn: 'root' })
@@ -12,213 +13,298 @@ export class FruitService {
 
   readonly fruits: Fruit[] = [
     {
-      id: 'mango', name: 'Alphonso Mango', emoji: '🥭',
-      tagline: 'King of fruits, rich in Vitamin A',
-      nutrients: ['Vitamin A', 'Vitamin C', 'Fiber'],
-      season: ['Apr', 'May', 'Jun'], pricePerKg: 350, quantityGrams: 500,
-      goals: ['glowing-skin', 'energy-boost', 'immunity'],
-      deficiencies: ['vitamin-a', 'vitamin-c'],
-      color: '#FFB347'
-    },
-    {
-      id: 'pomegranate', name: 'Pomegranate', emoji: '🍎',
-      tagline: 'Antioxidant powerhouse',
-      nutrients: ['Antioxidants', 'Iron', 'Vitamin C'],
-      season: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'], pricePerKg: 180, quantityGrams: 500,
-      goals: ['heart-health', 'immunity', 'glowing-skin'],
-      deficiencies: ['iron', 'antioxidants', 'vitamin-c'],
-      color: '#C41E3A'
-    },
-    {
-      id: 'banana', name: 'Elaichi Banana', emoji: '🍌',
-      tagline: 'Instant energy, potassium rich',
-      nutrients: ['Potassium', 'Fiber', 'Vitamin B6'],
+      id: 'chicken-quinoa-bowl',
+      name: 'Smoked Chicken & Quinoa Macro Bowl',
+      emoji: '🍗',
+      tagline: 'High lean protein with complex smart carbs for active muscle build & daily energy',
+      nutrients: ['48g Protein', 'Complex Carbs', 'Essential Amino Acids'],
       season: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-      pricePerKg: 60, quantityGrams: 1000,
-      goals: ['energy-boost', 'digestion', 'weight-loss'],
-      deficiencies: ['potassium', 'fiber'],
-      color: '#FFE135'
+      pricePerKg: 350,
+      quantityGrams: 450,
+      goals: ['muscle-gain', 'daily-energy', 'fat-loss'],
+      deficiencies: ['protein-deficiency', 'b12-deficiency'],
+      color: '#E87A5D',
+      proteinGrams: 48,
+      carbsGrams: 35,
+      fatGrams: 9,
+      calories: 410,
+      dietaryType: 'non-veg',
+      tier: 'pro'
     },
     {
-      id: 'orange', name: 'Nagpur Orange', emoji: '🍊',
-      tagline: 'Immunity shield, Vitamin C bomb',
-      nutrients: ['Vitamin C', 'Fiber', 'Folate'],
-      season: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar'], pricePerKg: 100, quantityGrams: 750,
-      goals: ['immunity', 'glowing-skin', 'weight-loss'],
-      deficiencies: ['vitamin-c', 'fiber'],
-      color: '#FF8C00'
-    },
-    {
-      id: 'papaya', name: 'Red Papaya', emoji: '🍈',
-      tagline: 'Digestive champion, enzyme-rich',
-      nutrients: ['Vitamin C', 'Vitamin A', 'Papain enzyme'],
+      id: 'paneer-tikka-protein-box',
+      name: 'Herb Grilled Paneer & Millet Power Box',
+      emoji: '🧀',
+      tagline: 'Rich vegetarian protein packed with calcium & slow-release clean energy carbs',
+      nutrients: ['38g Protein', 'Calcium', 'Dietary Fiber'],
       season: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-      pricePerKg: 50, quantityGrams: 1000,
-      goals: ['digestion', 'glowing-skin', 'immunity'],
-      deficiencies: ['vitamin-a', 'vitamin-c'],
-      color: '#FF6347'
+      pricePerKg: 299,
+      quantityGrams: 420,
+      goals: ['muscle-gain', 'daily-energy', 'maintenance'],
+      deficiencies: ['protein-deficiency', 'calcium'],
+      color: '#FFB347',
+      proteinGrams: 38,
+      carbsGrams: 40,
+      fatGrams: 14,
+      calories: 435,
+      dietaryType: 'veg',
+      tier: 'essential'
     },
     {
-      id: 'guava', name: 'Pink Guava', emoji: '🍐',
-      tagline: '4x more Vitamin C than oranges',
-      nutrients: ['Vitamin C', 'Fiber', 'Potassium'],
-      season: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'], pricePerKg: 80, quantityGrams: 750,
-      goals: ['immunity', 'weight-loss', 'digestion'],
-      deficiencies: ['vitamin-c', 'fiber', 'potassium'],
-      color: '#90EE90'
-    },
-    {
-      id: 'apple', name: 'Shimla Apple', emoji: '🍎',
-      tagline: 'Daily health, keeps the doctor away',
-      nutrients: ['Fiber', 'Vitamin C', 'Antioxidants'],
-      season: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov'], pricePerKg: 200, quantityGrams: 750,
-      goals: ['heart-health', 'weight-loss', 'digestion'],
-      deficiencies: ['fiber', 'antioxidants'],
-      color: '#DC143C'
-    },
-    {
-      id: 'watermelon', name: 'Watermelon', emoji: '🍉',
-      tagline: 'Hydration hero, lycopene rich',
-      nutrients: ['Lycopene', 'Vitamin A', 'Hydration'],
-      season: ['Mar', 'Apr', 'May', 'Jun', 'Jul'], pricePerKg: 30, quantityGrams: 2000,
-      goals: ['glowing-skin', 'energy-boost', 'weight-loss'],
-      deficiencies: ['vitamin-a', 'antioxidants'],
-      color: '#FF6B6B'
-    },
-    {
-      id: 'grapes', name: 'Black Grapes', emoji: '🍇',
-      tagline: 'Heart-friendly, resveratrol packed',
-      nutrients: ['Antioxidants', 'Vitamin K', 'Resveratrol'],
-      season: ['Feb', 'Mar', 'Apr', 'May'], pricePerKg: 120, quantityGrams: 500,
-      goals: ['heart-health', 'glowing-skin', 'energy-boost'],
-      deficiencies: ['antioxidants', 'iron'],
-      color: '#6B2D7B'
-    },
-    {
-      id: 'kiwi', name: 'Green Kiwi', emoji: '🥝',
-      tagline: 'Vitamin C champion, gut friendly',
-      nutrients: ['Vitamin C', 'Vitamin K', 'Fiber'],
-      season: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'], pricePerKg: 250, quantityGrams: 500,
-      goals: ['immunity', 'digestion', 'glowing-skin'],
-      deficiencies: ['vitamin-c', 'fiber'],
-      color: '#7CFC00'
-    },
-    {
-      id: 'chikoo', name: 'Chikoo (Sapota)', emoji: '🫘',
-      tagline: 'Natural sweetness, iron rich',
-      nutrients: ['Iron', 'Fiber', 'Vitamin A'],
-      season: ['Jan', 'Feb', 'Oct', 'Nov', 'Dec'], pricePerKg: 100, quantityGrams: 500,
-      goals: ['energy-boost', 'digestion'],
-      deficiencies: ['iron', 'fiber', 'vitamin-a'],
-      color: '#D2691E'
-    },
-    {
-      id: 'pineapple', name: 'Pineapple', emoji: '🍍',
-      tagline: 'Bromelain enzyme, anti-inflammatory',
-      nutrients: ['Vitamin C', 'Bromelain', 'Manganese'],
-      season: ['Mar', 'Apr', 'May', 'Jun', 'Jul'], pricePerKg: 60, quantityGrams: 1000,
-      goals: ['digestion', 'immunity', 'glowing-skin'],
-      deficiencies: ['vitamin-c'],
-      color: '#FFD700'
-    },
-    {
-      id: 'strawberry', name: 'Mahabaleshwar Strawberry', emoji: '🍓',
-      tagline: 'Antioxidant berry, skin glow',
-      nutrients: ['Vitamin C', 'Antioxidants', 'Folate'],
-      season: ['Dec', 'Jan', 'Feb', 'Mar'], pricePerKg: 300, quantityGrams: 250,
-      goals: ['glowing-skin', 'immunity', 'heart-health'],
-      deficiencies: ['vitamin-c', 'antioxidants'],
-      color: '#FF4757'
-    },
-    {
-      id: 'coconut', name: 'Tender Coconut', emoji: '🥥',
-      tagline: 'Electrolyte balance, nature\'s sports drink',
-      nutrients: ['Potassium', 'Electrolytes', 'Healthy fats'],
+      id: 'tofu-edamame-buddha-bowl',
+      name: 'Asian Tofu & Edamame Muscle Bowl',
+      emoji: '🫛',
+      tagline: '100% Plant-powered protein hero with sesame ginger glaze for active lifestyles',
+      nutrients: ['42g Protein', 'BCAA', 'Omega-3'],
       season: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-      pricePerKg: 45, quantityGrams: 1000,
-      goals: ['energy-boost', 'heart-health'],
-      deficiencies: ['potassium'],
-      color: '#8B7355'
+      pricePerKg: 320,
+      quantityGrams: 400,
+      goals: ['fat-loss', 'daily-energy', 'maintenance'],
+      deficiencies: ['protein-deficiency', 'fiber'],
+      color: '#7BC67E',
+      proteinGrams: 42,
+      carbsGrams: 28,
+      fatGrams: 11,
+      calories: 380,
+      dietaryType: 'veg',
+      tier: 'pro'
     },
     {
-      id: 'jamun', name: 'Jamun (Java Plum)', emoji: '🫐',
-      tagline: 'Blood sugar regulator, iron booster',
-      nutrients: ['Iron', 'Antioxidants', 'Vitamin C'],
-      season: ['Jun', 'Jul', 'Aug'], pricePerKg: 150, quantityGrams: 500,
-      goals: ['heart-health', 'immunity'],
-      deficiencies: ['iron', 'antioxidants'],
-      color: '#2E1A47'
+      id: 'egg-white-avocado-box',
+      name: 'Egg White Scramble & Avocado Toast Box',
+      emoji: '🥚',
+      tagline: 'Zero-fat pure egg whites with healthy avocado fats & multigrain toast',
+      nutrients: ['40g Protein', 'Healthy Monounsaturated Fats', 'Vitamin E'],
+      season: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      pricePerKg: 280,
+      quantityGrams: 380,
+      goals: ['fat-loss', 'daily-energy', 'maintenance'],
+      deficiencies: ['protein-deficiency', 'healthy-fats'],
+      color: '#F0C27A',
+      proteinGrams: 40,
+      carbsGrams: 24,
+      fatGrams: 8,
+      calories: 328,
+      dietaryType: 'eggetarian',
+      tier: 'essential'
     },
     {
-      id: 'lychee', name: 'Lychee', emoji: '🫕',
-      tagline: 'Sweet immunity, vitamin rich',
-      nutrients: ['Vitamin C', 'Copper', 'Potassium'],
-      season: ['May', 'Jun', 'Jul'], pricePerKg: 200, quantityGrams: 500,
-      goals: ['immunity', 'glowing-skin', 'energy-boost'],
-      deficiencies: ['vitamin-c', 'potassium'],
-      color: '#FF69B4'
+      id: 'salmon-asparagus-elite-box',
+      name: 'Pan-Seared Atlantic Salmon & Asparagus',
+      emoji: '🐟',
+      tagline: 'Gourmet superfood meal with high Omega-3 and premium organic protein',
+      nutrients: ['52g Protein', 'High Omega-3 EPA/DHA', 'Antioxidants'],
+      season: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      pricePerKg: 500,
+      quantityGrams: 450,
+      goals: ['muscle-gain', 'daily-energy'],
+      deficiencies: ['protein-deficiency', 'omega3'],
+      color: '#E05C5C',
+      proteinGrams: 52,
+      carbsGrams: 18,
+      fatGrams: 16,
+      calories: 424,
+      dietaryType: 'non-veg',
+      tier: 'elite'
     },
+    {
+      id: 'chana-sprout-power-box',
+      name: 'Sprouted Chana & Peanut High-Protein Salad Box',
+      emoji: '🥗',
+      tagline: 'Wholesome raw protein booster packed with gut-friendly enzymes & fiber',
+      nutrients: ['35g Protein', 'High Fiber', 'Iron'],
+      season: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      pricePerKg: 220,
+      quantityGrams: 400,
+      goals: ['daily-energy', 'fat-loss', 'maintenance'],
+      deficiencies: ['protein-deficiency', 'iron', 'fiber'],
+      color: '#90EE90',
+      proteinGrams: 35,
+      carbsGrams: 42,
+      fatGrams: 7,
+      calories: 370,
+      dietaryType: 'veg',
+      tier: 'essential'
+    }
   ];
 
   readonly healthGoals: HealthGoal[] = [
-    { id: 'immunity', name: 'Boost Immunity', icon: '🛡️', description: 'Strengthen your body\'s natural defenses with Vitamin C & antioxidant-rich fruits', color: '#4A7C59' },
-    { id: 'weight-loss', name: 'Weight Loss', icon: '⚖️', description: 'Low-calorie, high-fiber fruits to support healthy weight management', color: '#E8805A' },
-    { id: 'glowing-skin', name: 'Glowing Skin', icon: '✨', description: 'Vitamin A, C & E rich fruits for radiant, youthful skin', color: '#F0C27A' },
-    { id: 'digestion', name: 'Better Digestion', icon: '🌿', description: 'Enzyme & fiber-packed fruits for a happy, healthy gut', color: '#7BC67E' },
-    { id: 'energy-boost', name: 'Energy Boost', icon: '⚡', description: 'Natural sugars & potassium to power through your day', color: '#FFB347' },
-    { id: 'heart-health', name: 'Heart Health', icon: '❤️', description: 'Antioxidant & potassium-rich fruits to keep your heart strong', color: '#E05C5C' },
+    { id: 'daily-energy', name: 'Sustained Daily Energy & Focus', icon: '⚡', description: 'Clean macro-balanced meals to power your day without feeling sluggish or heavy', color: '#4A7C59' },
+    { id: 'muscle-gain', name: 'High Protein & Muscle Strength', icon: '💪', description: 'High-protein meals (35g-55g per box) tailored for active muscle build & recovery', color: '#E05C5C' },
+    { id: 'fat-loss', name: 'Weight Management & Fat Loss', icon: '🔥', description: 'Low-carb, high-protein thermal meals to support lean body composition', color: '#E8805A' },
+    { id: 'maintenance', name: 'Clean Everyday Wellness', icon: '🌿', description: 'Optimal 40/30/30 protein-carb-fat balance for total body vitality', color: '#FFB347' },
   ];
 
   readonly deficiencies: Deficiency[] = [
-    { id: 'vitamin-c', name: 'Vitamin C', icon: '🍊', description: 'Essential for immunity, skin repair, and iron absorption', color: '#FF8C00' },
-    { id: 'iron', name: 'Iron', icon: '💪', description: 'Vital for oxygen transport and energy levels', color: '#C41E3A' },
-    { id: 'potassium', name: 'Potassium', icon: '🔋', description: 'Key for muscle function, heart rhythm, and fluid balance', color: '#FFE135' },
-    { id: 'fiber', name: 'Fiber', icon: '🌾', description: 'Essential for digestive health and blood sugar control', color: '#90EE90' },
-    { id: 'vitamin-a', name: 'Vitamin A', icon: '👁️', description: 'Critical for vision, skin health, and immune function', color: '#FFB347' },
-    { id: 'antioxidants', name: 'Antioxidants', icon: '🫐', description: 'Protect cells from damage, slow aging, reduce inflammation', color: '#6B2D7B' },
+    { id: 'protein-deficiency', name: 'Daily Protein Requirement', icon: '🥩', description: 'Fulfills your daily protein intake requirement easily with gourmet chef meals', color: '#C41E3A' },
+    { id: 'b12-deficiency', name: 'Vitamin B12 & Vitality', icon: '⚡', description: 'Boosts red blood cells and keeps energy levels high all day', color: '#FF8C00' },
+    { id: 'omega3', name: 'Omega-3 & Joint Mobility', icon: '🐟', description: 'Protects joints, brain function, and reduces daily cellular inflammation', color: '#6B2D7B' },
+    { id: 'iron', name: 'Iron & Blood Oxygenation', icon: '🩸', description: 'Improves stamina and prevents daily fatigue', color: '#DC143C' },
+    { id: 'calcium', name: 'Calcium & Bone Health', icon: '🦴', description: 'Fortifies bone density and supports strength for daily activities', color: '#FFE135' },
+    { id: 'fiber', name: 'Digestive Fiber & Gut Health', icon: '🌾', description: 'Ensures optimal digestion & gut microbiome health', color: '#90EE90' },
+  ];
+
+  readonly personas: PersonaTarget[] = [
+    {
+      id: 'ai-consultation',
+      title: 'AI & Expert Nutritionist Customization',
+      icon: '🧑‍⚕️',
+      badge: '100% Personalized Meal Plan',
+      subtitle: 'Our intelligent AI engine combined with expert nutritionists custom-curates your daily meal boxes based on your weight, activity, and health targets.',
+      benefits: [
+        'Free 1-on-1 Nutritionist macro assessment',
+        'AI automated daily protein & calorie calculation',
+        'Custom Veg, Non-Veg, & Eggetarian meal swapping',
+        'Pause, adjust macros, or skip days anytime'
+      ],
+      suggestedPlan: '5-Day Trial / Monthly Plan',
+      bgGradient: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)'
+    },
+    {
+      id: 'fresh-daily',
+      title: 'Chef-Cooked Freshness Delivered Daily',
+      icon: '🥗',
+      badge: 'Zero Cooking · Zero Prep',
+      subtitle: 'No more meal prepping, grocery shopping, or washing dishes. Hot, delicious protein meal boxes delivered directly to your doorstep.',
+      benefits: [
+        'Freshly cooked daily by certified gourmet chefs',
+        'Choice of Lunch, Dinner, or Morning delivery slots',
+        '100% natural, high-quality ingredients & lean proteins',
+        'Hassle-free subscription management'
+      ],
+      suggestedPlan: '5-Day Trial (₹1,495)',
+      bgGradient: 'linear-gradient(135deg, #0F5132 0%, #0A3622 100%)'
+    }
   ];
 
   readonly testimonials: Testimonial[] = [
-    { id: '1', name: 'Priya Sharma', avatar: '👩‍💼', rating: 5, review: 'EatSattva changed my mornings! The immunity box helped me stay flu-free all winter. The fruits are always fresh and perfectly ripe.', goal: 'Immunity Boost', city: 'Mumbai' },
-    { id: '2', name: 'Rahul Verma', avatar: '👨‍💻', rating: 5, review: 'As a developer, I needed sustained energy. The energy boost box is perfect — no more afternoon crashes! Love the banana + coconut combo.', goal: 'Energy Boost', city: 'Bangalore' },
-    { id: '3', name: 'Anita Desai', avatar: '👩‍🎨', rating: 4, review: 'The glowing skin box is my secret! After 3 weeks of papaya + kiwi + strawberry, my skin has never looked better. Friends keep asking my routine.', goal: 'Glowing Skin', city: 'Pune' },
-    { id: '4', name: 'Vikram Patel', avatar: '👨‍⚕️', rating: 5, review: 'I recommended EatSattva to my patients. The nutritionist consultation with the monthly plan is genuine and helpful. Great concept!', goal: 'Heart Health', city: 'Delhi' },
+    {
+      id: '1',
+      name: 'Balaji S.',
+      role: 'Working Professional',
+      incomeSegment: 'Essential Plan Subscriber',
+      avatar: '👨‍💼',
+      rating: 5,
+      review: 'I tried the 5-Day Trial at ₹1,495 (₹299/day). The food taste is amazing and the protein portion is massive! Saved me so much time cooking every evening.',
+      goal: 'Sustained Daily Energy',
+      city: 'Pune'
+    },
+    {
+      id: '2',
+      name: 'Akshay K.',
+      role: 'Fitness Enthusiast',
+      incomeSegment: 'Essential Plan Subscriber',
+      avatar: '🏋️‍♂️',
+      rating: 5,
+      review: 'EatSattva gives me 40g+ protein per meal effortlessly. The AI nutritionist consultation tailored my carb ratio perfectly for fat loss.',
+      goal: 'High Protein & Fat Loss',
+      city: 'Bangalore'
+    },
+    {
+      id: '3',
+      name: 'Rahul C.',
+      role: 'Senior Project Lead',
+      incomeSegment: 'Pro Plan Subscriber',
+      avatar: '👔',
+      rating: 5,
+      review: 'The Pro Performance plan is a game changer! 48g clean protein every day right at lunch time. Zero slumps, pure energy.',
+      goal: 'Lean Shred & Energy',
+      city: 'Mumbai'
+    },
+    {
+      id: '4',
+      name: 'Danny P.',
+      role: 'Business Consultant',
+      incomeSegment: 'Elite Gourmet Plan Subscriber',
+      avatar: '💼',
+      rating: 5,
+      review: 'The Atlantic Salmon and smoked chicken boxes are gourmet restaurant quality. Having an AI + nutritionist plan means my macros are always 100% on point.',
+      goal: 'Gourmet High Protein',
+      city: 'Delhi'
+    }
   ];
 
   readonly pricingPlans: PricingPlan[] = [
     {
-      id: 'weekly',
-      name: 'Weekly Box',
-      description: 'Pay per box, no commitment',
-      price: '₹299–599',
-      priceSubtext: 'per box · varies by selection',
+      id: '5-day-trial',
+      name: '5-Day Trial Plan',
+      description: 'Experience Gourmet High-Protein Quality for 5 Days',
+      price: '₹1,495',
+      priceSubtext: '₹299 / day × 5 days · Zero commitment',
+      dailyPrice: '₹299/day',
       features: [
-        'Nutritionist-curated fruit selection',
-        'Fresh seasonal fruits',
-        '5–7 varieties per box',
-        'Goal-based personalization',
-        'Delivery fee: ₹49/order',
-      ],
-      highlighted: false,
-      cta: 'Order This Week'
-    },
-    {
-      id: 'monthly',
-      name: 'Monthly Plan',
-      description: 'Subscribe & save more',
-      price: '₹999',
-      priceSubtext: 'per month · 4 boxes included',
-      features: [
-        'Everything in Weekly +',
-        '✨ Free delivery on all boxes',
-        '🧑‍⚕️ Free nutritionist consultation',
-        'Priority seasonal picks',
-        'Pause or cancel anytime',
-        'Save up to ₹400/month',
+        '🔥 5 High-Protein Chef Gourmet Meal Boxes',
+        '💪 Guaranteed 35g – 48g Protein per meal box',
+        '🧑‍⚕️ Free AI & Nutritionist Meal Customization',
+        '🥗 Veg, Non-Veg & Eggetarian options available',
+        '🚚 Apply Scratch Code at checkout for Free Delivery!',
+        '⚡ Convert to monthly subscription anytime'
       ],
       highlighted: true,
-      badge: 'Best Value',
-      cta: 'Start Subscription'
+      badge: 'Flagship Starter Trial',
+      cta: 'Claim 5-Day Trial (₹1,495)',
+      targetedAudience: 'Everyone seeking high protein & healthy meals',
+      isTrial: true
+    },
+    {
+      id: 'essential-plan',
+      name: 'Essential Protein Plan',
+      description: 'Wholesome High-Protein Daily Meals for Everyone',
+      price: '₹6,999',
+      priceSubtext: 'per month (~₹233/day) · 30 Days',
+      dailyPrice: '₹233/day',
+      features: [
+        '30 High-Protein Macro Meals (35g–40g Protein)',
+        'Wholesome Paneer, Soya, Egg & Chicken combos',
+        '🧑‍⚕️ 1-on-1 Expert Nutritionist Consultation',
+        'Weekly menu rotation (never boring)',
+        'Pause & resume delivery anytime'
+      ],
+      highlighted: false,
+      badge: 'Popular Everyday Plan',
+      cta: 'Subscribe Essential (₹6,999)',
+      targetedAudience: 'Everyday Health Seekers',
+      salaryRange: '₹50k to ₹80k budget'
+    },
+    {
+      id: 'pro-plan',
+      name: 'Pro Performance Plan',
+      description: 'Optimized High Protein & Custom Macro Splits',
+      price: '₹9,999',
+      priceSubtext: 'per month (~₹333/day) · 30 Days',
+      dailyPrice: '₹333/day',
+      features: [
+        '30 Premium Protein Meals (45g–50g Protein)',
+        '🤖 AI-Powered Custom Carb & Protein Macro Ratios',
+        '⚡ Priority lunch or dinner delivery slot',
+        '🧑‍⚕️ Dedicated Nutritionist macro tracking',
+        'Free BCAA & Protein shake booster on Saturdays'
+      ],
+      highlighted: false,
+      badge: 'Advanced Macro Plan',
+      cta: 'Subscribe Pro (₹9,999)',
+      targetedAudience: 'Active Lifestyle & Fitness Enthusiasts',
+      salaryRange: '₹80k to ₹1.30L budget'
+    },
+    {
+      id: 'elite-plan',
+      name: 'Elite Gourmet Plan',
+      description: 'Gourmet Organic Protein & Dedicated Nutritionist',
+      price: '₹14,999',
+      priceSubtext: 'per month (~₹500/day) · 30 Days',
+      dailyPrice: '₹500/day',
+      features: [
+        '30 Gourmet Organic Protein Meals (55g+ Protein)',
+        'Atlantic Salmon, Smoked Turkey, Organic Tofu & Quinoa',
+        '👑 VIP Priority Delivery Slot Window',
+        'Zero-sugar high protein gourmet desserts included',
+        'Dedicated Personal AI + Human Nutritionist Team'
+      ],
+      highlighted: false,
+      badge: 'Gourmet Superfood Plan',
+      cta: 'Subscribe Elite (₹14,999)',
+      targetedAudience: 'Premium Health & Gourmet Seekers',
+      salaryRange: '₹1.50L+ budget'
     }
   ];
 
@@ -231,11 +317,10 @@ export class FruitService {
   }
 
   getSeasonalFruits(): Fruit[] {
-    const currentMonth = new Date().toLocaleString('en', { month: 'short' });
-    return this.fruits.filter(f => f.season.includes(currentMonth));
+    return this.fruits;
   }
 
   calculateBoxPrice(fruits: Fruit[]): number {
-    return fruits.reduce((sum, f) => sum + (f.pricePerKg * f.quantityGrams / 1000), 0);
+    return fruits.reduce((sum, f) => sum + f.pricePerKg, 0);
   }
 }

@@ -1,37 +1,80 @@
-<article class="fruit-card">
-  <!-- Emoji & Macro Badge area -->
+<article class="swiggy-food-card">
+  <!-- Swiggy Food Banner / Image Wrap -->
   <div
-    class="fruit-card__emoji-wrap"
-    [style.background]="'radial-gradient(circle, ' + fruit().color + '30 0%, ' + fruit().color + '10 70%)'"
+    class="swiggy-food-card__image-wrap"
+    [style.background]="'linear-gradient(135deg, ' + (fruit().color || '#16A34A') + '25 0%, #F0FDF4 100%)'"
   >
-    <span class="fruit-card__emoji">{{ fruit().emoji }}</span>
-    @if (fruit().proteinGrams) {
-      <span class="badge badge-gold fruit-card__protein-badge">💪 {{ fruit().proteinGrams }}g Protein</span>
-    }
-  </div>
-
-  <!-- Info -->
-  <div class="fruit-card__body">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-      <h3 class="fruit-card__name">{{ fruit().name }}</h3>
+    <!-- Veg / Non-Veg indicator -->
+    <div class="swiggy-food-card__diet-badge">
       @if (fruit().dietaryType === 'non-veg') {
-        <span class="badge" style="background: #ef4444; color: white; font-size: 0.7rem;">🍗 Non-Veg</span>
+        <span class="nonveg-indicator" title="Non-Vegetarian"></span>
       } @else if (fruit().dietaryType === 'eggetarian') {
-        <span class="badge" style="background: #f59e0b; color: white; font-size: 0.7rem;">🥚 Egg</span>
+        <span style="font-size: 0.75rem;">🥚 Egg</span>
       } @else {
-        <span class="badge" style="background: #10b981; color: white; font-size: 0.7rem;">🥗 Veg</span>
+        <span class="veg-indicator" title="Pure Vegetarian"></span>
       }
     </div>
-    <p class="fruit-card__tagline">{{ fruit().tagline }}</p>
-    @if (fruit().calories) {
-      <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">🔥 {{ fruit().calories }} kcal · {{ fruit().carbsGrams || 30 }}g Carbs · {{ fruit().fatGrams || 10 }}g Fats</p>
-    }
+
+    <!-- Swiggy Promo / Macro Tag Overlay -->
+    <div class="swiggy-food-card__promo-tag">
+      @if (fruit().proteinGrams) {
+        <span>💪 {{ fruit().proteinGrams }}g PROTEIN</span>
+      } @else {
+        <span>50% OFF UP TO ₹100</span>
+      }
+    </div>
+
+    <!-- Big Center Emoji Illustration -->
+    <span class="swiggy-food-card__emoji">{{ fruit().emoji }}</span>
+
+    <!-- Swiggy ADD Button (Positioned overlap at bottom center/right) -->
+    <div class="swiggy-food-card__add-wrap">
+      @if (addedCount() === 0) {
+        <button class="btn-swiggy-add" (click)="toggleAdd()">
+          ADD <span style="font-size: 0.75rem; vertical-align: top;">+</span>
+        </button>
+      } @else {
+        <div class="swiggy-quantity-counter">
+          <button (click)="decrement()" class="qty-btn">-</button>
+          <span class="qty-num">{{ addedCount() }}</span>
+          <button (click)="increment()" class="qty-btn">+</button>
+        </div>
+      }
+    </div>
   </div>
 
-  <!-- Nutrient badges -->
-  <div class="fruit-card__nutrients">
-    @for (nutrient of fruit().nutrients; track nutrient) {
-      <span class="badge badge-primary fruit-card__badge">{{ nutrient }}</span>
-    }
+  <!-- Swiggy Food Info Body -->
+  <div class="swiggy-food-card__body">
+    <div class="swiggy-food-card__header">
+      <h3 class="swiggy-food-card__title">{{ fruit().name }}</h3>
+      <!-- Swiggy Green Rating Pill -->
+      <span class="rating-pill">
+        <span>★</span>
+        <span>4.8</span>
+      </span>
+    </div>
+
+    <p class="swiggy-food-card__tagline">{{ fruit().tagline }}</p>
+
+    <!-- Macro stats -->
+    <div class="swiggy-food-card__macros">
+      <span>🔥 {{ fruit().calories || 420 }} kcal</span>
+      <span class="dot-sep">•</span>
+      <span>⏱️ 25-30 mins</span>
+    </div>
+
+    <!-- Price and Nutrients -->
+    <div class="swiggy-food-card__footer">
+      <div class="swiggy-food-card__price">
+        <span class="price-current">₹{{ fruit().pricePerKg || 249 }}</span>
+        <span class="price-original">₹{{ (fruit().pricePerKg || 249) + 100 }}</span>
+      </div>
+
+      <div class="swiggy-food-card__tags">
+        @for (nutrient of fruit().nutrients.slice(0, 2); track nutrient) {
+          <span class="badge badge-primary">{{ nutrient }}</span>
+        }
+      </div>
+    </div>
   </div>
 </article>

@@ -6,7 +6,7 @@
         class="confetti-piece"
         [style.--x]="(i * 37 % 100) + '%'"
         [style.--delay]="(i * 0.08) + 's'"
-        [style.--color]="i % 4 === 0 ? '#F59E0B' : i % 4 === 1 ? '#10B981' : i % 4 === 2 ? '#3B82F6' : '#EF4444'"
+        [style.--color]="i % 4 === 0 ? '#16A34A' : i % 4 === 1 ? '#22C55E' : i % 4 === 2 ? '#10B981' : '#34D399'"
       ></span>
     }
   </div>
@@ -18,7 +18,7 @@
     <!-- Order Placed Success -->
     @if (orderPlaced()) {
       <div class="order-success animate-fade-in-up">
-        <div class="order-success__icon">🔥</div>
+        <div class="order-success__icon">🥗</div>
         <h1 class="order-success__title">High-Protein Meal Order Placed!</h1>
         <p class="order-success__text">
           @if (isTrialPlan()) {
@@ -29,26 +29,26 @@
             Your chef-cooked protein boxes are scheduled for daily delivery.
           }
         </p>
-        <div class="order-success__details card" style="text-align: left; max-width: 540px; margin: 24px auto;">
+        <div class="order-success__details card" style="text-align: left; max-width: 540px; margin: 24px auto; border-color: #DCFCE7;">
           <div class="order-success__row">
             <span>📋 Selected Plan</span>
-            <span style="font-weight: 700; color: #F59E0B;">{{ selectedPlan().name }}</span>
+            <span style="font-weight: 700; color: #16A34A;">{{ selectedPlan().name }}</span>
           </div>
           <div class="order-success__row">
             <span>💪 Guaranteed Protein</span>
-            <span class="badge badge-gold">~{{ avgProteinPerMeal() }}g Protein / Meal</span>
+            <span class="badge badge-green">~{{ avgProteinPerMeal() }}g Protein / Meal</span>
           </div>
           <div class="order-success__row">
             <span>🚚 Delivery Fee</span>
             @if (deliveryFee() === 0) {
-              <span style="color: #10B981; font-weight: 700;">FREE (₹0)</span>
+              <span style="color: #16A34A; font-weight: 700;">FREE (₹0)</span>
             } @else {
               <span>₹{{ deliveryFee() }}</span>
             }
           </div>
           <div class="order-success__row">
             <span>💰 Total Amount Paid</span>
-            <span class="order-success__price" style="color: #F59E0B; font-weight: 800;">₹{{ totalPrice() | number:'1.0-0' }}</span>
+            <span class="order-success__price" style="color: #16A34A; font-weight: 800;">₹{{ totalPrice() | number:'1.0-0' }}</span>
           </div>
           <div class="order-success__row">
             <span>⏰ Delivery Slot</span>
@@ -59,7 +59,7 @@
             <span>{{ name }} ({{ phone }}), {{ address }}{{ companyOrBuilding ? ' [' + companyOrBuilding + ']' : '' }}, {{ pincode }}</span>
           </div>
         </div>
-        <button class="btn btn-primary btn-lg" (click)="goHome()" style="background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 700;">← Back to Home</button>
+        <button class="btn btn-primary btn-lg" (click)="goHome()">← Back to Home</button>
       </div>
     } @else {
 
@@ -79,7 +79,7 @@
       <div class="checkout__form animate-fade-in-up" style="animation-delay: 0.1s">
 
         <!-- SCRATCH CODE COUPON CARD -->
-        <div class="form-section card" style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); border: 2px solid #F59E0B; border-radius: 16px; color: #FFF; padding: 20px;">
+        <div class="form-section card" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); border: 2px solid #16A34A; border-radius: 16px; color: #FFF; padding: 20px;">
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
             <div style="display: flex; align-items: center; gap: 10px;">
               <span style="font-size: 2rem;">🎰</span>
@@ -89,7 +89,7 @@
               </div>
             </div>
             @if (isCouponApplied()) {
-              <span class="badge badge-gold" style="font-size: 0.75rem; padding: 4px 10px;">🎉 FREE DELIVERY APPLIED</span>
+              <span class="badge badge-green" style="font-size: 0.75rem; padding: 4px 10px;">🎉 FREE DELIVERY APPLIED</span>
             }
           </div>
 
@@ -97,17 +97,17 @@
           @if (!isScratchRevealed()) {
             <div
               (click)="scratchCard()"
-              style="background: linear-gradient(135deg, #D97706, #F59E0B); border: 2px dashed #FFF; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: transform 0.2s ease;"
+              style="background: linear-gradient(135deg, #16A34A, #22C55E); border: 2px dashed #FFF; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: transform 0.2s ease;"
               onmouseover="this.style.transform='scale(1.02)'"
               onmouseout="this.style.transform='scale(1)'"
             >
               <div style="font-size: 1.8rem;">🪙 ⚡ 🎁</div>
-              <strong style="color: #000; font-size: 1.1rem; display: block; margin-top: 4px;">CLICK / TAP TO SCRATCH CARD</strong>
-              <span style="color: rgba(0,0,0,0.7); font-size: 0.82rem;">Reveal Secret Free Delivery Code</span>
+              <strong style="color: #FFF; font-size: 1.1rem; display: block; margin-top: 4px;">CLICK / TAP TO SCRATCH CARD</strong>
+              <span style="color: #DCFCE7; font-size: 0.82rem;">Reveal Secret Free Delivery Code</span>
             </div>
           } @else {
-            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10B981; border-radius: 12px; padding: 16px; text-align: center; animate: fade-in;">
-              <span class="badge" style="background: #10B981; color: #FFF; font-weight: 800; font-size: 0.9rem; letter-spacing: 1px;">CODE: FREEDEL</span>
+            <div style="background: rgba(22, 163, 74, 0.2); border: 1px solid #16A34A; border-radius: 12px; padding: 16px; text-align: center;">
+              <span class="badge badge-green" style="font-weight: 800; font-size: 0.9rem; letter-spacing: 1px;">CODE: FREEDEL</span>
               <p style="margin: 8px 0 0 0; font-size: 0.9rem; color: #34D399; font-weight: 600;">
                 🎉 Coupon Applied! Delivery fee waived (₹49 → ₹0 Free Delivery).
               </p>
@@ -255,12 +255,12 @@
             @for (meal of curatedFruits(); track meal.id) {
               <div class="summary-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.88rem;">
                 <span>{{ meal.emoji }} {{ meal.name }}</span>
-                <span class="badge badge-gold" style="font-size: 0.72rem;">{{ meal.proteinGrams || 40 }}g Protein</span>
+                <span class="badge badge-green" style="font-size: 0.72rem;">{{ meal.proteinGrams || 40 }}g Protein</span>
               </div>
             }
           </div>
 
-          <div class="summary-card__divider" style="margin: 16px 0; border-top: 1px dashed var(--border-color);"></div>
+          <div class="summary-card__divider" style="margin: 16px 0; border-top: 1px dashed var(--border);"></div>
 
           <div class="summary-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span>Meal Plan ({{ selectedPlan().name }})</span>
@@ -270,7 +270,7 @@
           <div class="summary-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span>Nutrition Consultation</span>
             @if (boxService.nutritionistConsultationFee() === 0) {
-              <span style="color: #10B981; font-weight: 700;">FREE (AI / Included)</span>
+              <span style="color: #16A34A; font-weight: 700;">FREE (AI / Included)</span>
             } @else {
               <span style="font-weight: 600;">₹{{ boxService.nutritionistConsultationFee() }}</span>
             }
@@ -279,27 +279,27 @@
           <div class="summary-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
             <span>Delivery Charge</span>
             @if (deliveryFee() === 0) {
-              <span style="color: #10B981; font-weight: 700;">FREE (₹0)</span>
+              <span style="color: #16A34A; font-weight: 700;">FREE (₹0)</span>
             } @else {
               <span style="font-weight: 600;">₹{{ deliveryFee() }}</span>
             }
           </div>
 
           @if (deliveryFee() > 0 && !isScratchRevealed()) {
-            <p style="font-size: 0.78rem; color: #D97706; background: rgba(245, 158, 11, 0.1); padding: 6px 10px; border-radius: 6px; margin: 4px 0 10px 0;">
+            <p style="font-size: 0.78rem; color: #16A34A; background: #F0FDF4; padding: 6px 10px; border-radius: 6px; margin: 4px 0 10px 0;">
               💡 Scratch the coupon card to get <strong>Free Delivery</strong>!
             </p>
           }
 
-          <div class="summary-card__divider" style="margin: 16px 0; border-top: 1px solid var(--border-color);"></div>
+          <div class="summary-card__divider" style="margin: 16px 0; border-top: 1px solid var(--border);"></div>
 
           <div class="summary-card__row summary-card__row--total" style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800;">
             <span>Total Payable</span>
-            <span style="color: #F59E0B;">₹{{ totalPrice() | number:'1.0-0' }}</span>
+            <span style="color: #16A34A;">₹{{ totalPrice() | number:'1.0-0' }}</span>
           </div>
 
           @if (isTrialPlan()) {
-            <div class="summary-card__perks" style="margin-top: 16px; font-size: 0.8rem; background: rgba(245, 158, 11, 0.1); padding: 12px; border-radius: 10px;">
+            <div class="summary-card__perks" style="margin-top: 16px; font-size: 0.8rem; background: #F0FDF4; padding: 12px; border-radius: 10px;">
               <div class="summary-card__perk">🔥 5 High-Protein Gourmet Meal Boxes</div>
               <div class="summary-card__perk">💪 35g-48g Protein per serving</div>
               <div class="summary-card__perk">🧑‍⚕️ AI + Expert Nutritionist guidance</div>
@@ -310,7 +310,6 @@
             class="btn btn-primary btn-lg summary-card__cta"
             [disabled]="!isFormValid"
             (click)="placeOrder()"
-            style="width: 100%; margin-top: 20px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 700;"
           >
             Confirm Order (₹{{ totalPrice() | number:'1.0-0' }}) 🎉
           </button>

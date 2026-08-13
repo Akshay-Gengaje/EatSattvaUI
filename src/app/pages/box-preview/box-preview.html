@@ -21,16 +21,16 @@
     </div>
 
     <!-- Selected Plan Banner -->
-    <div class="card animate-fade-in-up" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.1) 100%); border: 2px solid #F59E0B; border-radius: 16px; padding: 18px 24px; margin-bottom: 28px;">
+    <div class="card animate-fade-in-up" style="background: #F0FDF4; border: 2px solid #16A34A; border-radius: 16px; padding: 18px 24px; margin-bottom: 28px;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <div>
-          <span class="badge badge-gold">{{ selectedPlan().badge || 'Selected Plan' }}</span>
-          <h2 style="font-size: 1.3rem; margin: 4px 0 2px 0;">{{ selectedPlan().name }}</h2>
-          <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">{{ selectedPlan().description }}</p>
+          <span class="badge badge-green">{{ selectedPlan().badge || 'Selected Plan' }}</span>
+          <h2 style="font-size: 1.3rem; margin: 4px 0 2px 0; color: #0F172A;">{{ selectedPlan().name }}</h2>
+          <p style="margin: 0; font-size: 0.88rem; color: #64748B;">{{ selectedPlan().description }}</p>
         </div>
         <div style="text-align: right;">
-          <div style="font-size: 1.8rem; font-weight: 800; color: #F59E0B;">{{ selectedPlan().price }}</div>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">{{ selectedPlan().priceSubtext }}</div>
+          <div style="font-size: 1.8rem; font-weight: 900; color: #16A34A;">{{ selectedPlan().price }}</div>
+          <div style="font-size: 0.8rem; color: #64748B;">{{ selectedPlan().priceSubtext }}</div>
         </div>
       </div>
     </div>
@@ -39,30 +39,30 @@
 
       <!-- Left: Protein Meals Grid -->
       <div class="box-preview__fruits animate-fade-in-up" style="animation-delay: 0.1s">
-        <h2 class="box-preview__sub-title" style="display: flex; align-items: center; justify-content: space-between;">
+        <h2 class="box-preview__sub-title" style="display: flex; align-items: center; justify-content: space-between; font-size: 1.15rem; margin-bottom: 16px;">
           <span>📦 Meals Included in Your Box</span>
-          <span class="badge badge-gold">💪 Avg {{ avgProteinPerMeal() }}g Protein / Meal</span>
+          <span class="badge badge-green">💪 Avg {{ avgProteinPerMeal() }}g Protein / Meal</span>
         </h2>
 
         <div class="box-fruits-grid" style="display: grid; gap: 16px;">
           @for (meal of curatedFruits(); track meal.id) {
             <div class="box-fruit-item card" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-radius: 14px;">
               <div style="display: flex; align-items: center; gap: 14px;">
-                <div class="box-fruit-item__emoji-wrap" [style.background]="'radial-gradient(circle, ' + meal.color + '30 0%, ' + meal.color + '08 70%)'" style="width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;">
+                <div class="box-fruit-item__emoji-wrap" style="width: 48px; height: 48px; border-radius: 12px; background: #F0FDF4; border: 1px solid #DCFCE7; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;">
                   <span>{{ meal.emoji }}</span>
                 </div>
                 <div>
-                  <strong style="display: block; font-size: 1.02rem; color: var(--text-main);">{{ meal.name }}</strong>
-                  <span style="font-size: 0.8rem; color: var(--text-muted);">🔥 {{ meal.calories || 400 }} kcal · {{ meal.carbsGrams || 30 }}g Carbs · {{ meal.fatGrams || 10 }}g Fats</span>
+                  <strong style="display: block; font-size: 1.02rem; color: #0F172A;">{{ meal.name }}</strong>
+                  <span style="font-size: 0.8rem; color: #64748B;">🔥 {{ meal.calories || 400 }} kcal · {{ meal.carbsGrams || 30 }}g Carbs · {{ meal.fatGrams || 10 }}g Fats</span>
                 </div>
               </div>
 
               <div style="text-align: right;">
-                <span class="badge badge-gold" style="font-weight: 700;">💪 {{ meal.proteinGrams || 42 }}g Protein</span>
+                <span class="badge badge-green" style="font-weight: 700;">💪 {{ meal.proteinGrams || 42 }}g Protein</span>
                 @if (meal.dietaryType === 'non-veg') {
                   <span style="display: block; font-size: 0.72rem; color: #EF4444; margin-top: 2px;">🍗 Non-Veg</span>
                 } @else {
-                  <span style="display: block; font-size: 0.72rem; color: #10B981; margin-top: 2px;">🥗 Veg</span>
+                  <span style="display: block; font-size: 0.72rem; color: #16A34A; margin-top: 2px;">🥗 Veg</span>
                 }
               </div>
             </div>
@@ -75,20 +75,19 @@
 
         <!-- Macro Split Summary -->
         <div class="nutrition-panel card" style="border-radius: 16px;">
-          <h3 class="nutrition-panel__title">📊 Verified Macro Nutrients</h3>
-          <div class="nutrition-panel__bars">
+          <h3 class="nutrition-panel__title" style="font-size: 1.1rem; color: #0F172A; margin-bottom: 14px;">📊 Verified Macro Nutrients</h3>
+          <div class="nutrition-panel__bars" style="display: flex; flex-direction: column; gap: 10px;">
             @for (n of nutrientsCovered(); track n.name) {
               <div class="nutrition-bar">
-                <div class="nutrition-bar__header">
-                  <span class="nutrition-bar__icon">{{ n.icon }}</span>
-                  <span class="nutrition-bar__name">{{ n.name }}</span>
-                  <span class="nutrition-bar__pct">{{ n.percentage }}%</span>
+                <div class="nutrition-bar__header" style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                  <span>{{ n.icon }} {{ n.name }}</span>
+                  <span style="font-weight: 700; color: #16A34A;">{{ n.percentage }}%</span>
                 </div>
-                <div class="nutrition-bar__track">
+                <div class="nutrition-bar__track" style="height: 6px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
                   <div
                     class="nutrition-bar__fill"
                     [style.width.%]="n.percentage"
-                    [style.background]="'#F59E0B'"
+                    style="height: 100%; background: #16A34A; border-radius: 999px;"
                   ></div>
                 </div>
               </div>
@@ -98,50 +97,47 @@
 
         <!-- Price Card -->
         <div class="price-card card" style="border-radius: 16px; margin-top: 20px;">
-          <h3 class="price-card__title">💳 Summary &amp; Checkout</h3>
+          <h3 class="price-card__title" style="font-size: 1.1rem; color: #0F172A; margin-bottom: 14px;">💳 Summary &amp; Checkout</h3>
 
-          <div class="price-card__row">
+          <div class="price-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
             <span>Selected Plan</span>
-            <span style="font-weight: 600;">{{ selectedPlan().name }}</span>
+            <span style="font-weight: 700;">{{ selectedPlan().name }}</span>
           </div>
 
-          <div class="price-card__row">
+          <div class="price-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
             <span>Guaranteed Protein</span>
-            <span class="badge badge-gold">~{{ avgProteinPerMeal() }}g / meal</span>
+            <span class="badge badge-green">~{{ avgProteinPerMeal() }}g / meal</span>
           </div>
 
-          <div class="price-card__row">
+          <div class="price-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
             <span>Customization Guidance</span>
             @if (boxService.nutritionistConsultationFee() === 0) {
-              <span style="color: #10B981; font-weight: 600;">FREE (AI / Sub)</span>
+              <span style="color: #16A34A; font-weight: 700;">FREE (AI / Sub)</span>
             } @else {
               <span style="font-weight: 600;">₹{{ boxService.nutritionistConsultationFee() }}</span>
             }
           </div>
 
-          <div class="price-card__row">
+          <div class="price-card__row" style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
             <span>Doorstep Delivery</span>
-            <span style="color: #10B981; font-weight: 600;">FREE</span>
+            <span style="color: #16A34A; font-weight: 700;">FREE</span>
           </div>
 
-          <div class="price-card__divider"></div>
+          <div style="margin: 14px 0; border-top: 1px solid #E2E8F0;"></div>
 
-          <div class="price-card__row price-card__row--total">
-            <span>Total Payable</span>
-            <span style="color: #F59E0B; font-size: 1.8rem; font-weight: 800;">₹{{ totalPrice() | number:'1.0-0' }}</span>
+          <div class="price-card__row" style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 700;">Total Payable</span>
+            <span style="color: #16A34A; font-size: 1.8rem; font-weight: 900;">₹{{ totalPrice() | number:'1.0-0' }}</span>
           </div>
 
           @if (isTrialPlan()) {
-            <div class="upsell-card" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10B981; border-radius: 12px; padding: 12px; margin-top: 14px;">
-              <span class="upsell-card__icon">⚡</span>
-              <div class="upsell-card__text">
-                <strong style="color: #10B981;">5-Day Trial Special</strong>
-                <span style="font-size: 0.8rem;">Experience quality for 5 days. Convert to subscription anytime with 1-click!</span>
-              </div>
+            <div class="upsell-card" style="background: #F0FDF4; border: 1px solid #DCFCE7; border-radius: 12px; padding: 12px; margin-top: 14px;">
+              <div style="font-size: 0.85rem; color: #166534; font-weight: 700;">⚡ 5-Day Trial Special</div>
+              <div style="font-size: 0.8rem; color: #475569; margin-top: 2px;">Experience chef quality for 5 days. Convert to monthly subscription anytime!</div>
             </div>
           }
 
-          <button class="btn btn-primary btn-lg price-card__cta" (click)="proceedToCheckout()" style="background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 700; width: 100%; margin-top: 18px;">
+          <button class="btn btn-primary btn-lg" (click)="proceedToCheckout()" style="width: 100%; margin-top: 18px;">
             Proceed to Checkout (₹{{ totalPrice() | number:'1.0-0' }}) →
           </button>
         </div>

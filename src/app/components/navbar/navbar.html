@@ -1,62 +1,77 @@
 <nav class="navbar" [class.navbar--scrolled]="isScrolled()">
   <div class="navbar__inner container">
-    <!-- Bespoke EatSattva Logo -->
-    <a routerLink="/" class="navbar__logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-      <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); border: 2px solid #F59E0B; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);">
-        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Sattva S Leaf & Sun Ray SVG Icon -->
-          <path d="M16 3C16 3 24 9 24 17C24 21.4183 20.4183 25 16 25C11.5817 25 8 21.4183 8 17C8 13.5 10.5 10.5 13.5 9" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M16 8C16 8 20 12 20 16C20 18.2091 18.2091 20 16 20C13.7909 20 12 18.2091 12 16" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="16" cy="14" r="2" fill="#F59E0B"/>
-        </svg>
-      </div>
-      <div style="display: flex; flex-direction: column; justify-content: center;">
-        <span class="navbar__logo-text" style="font-weight: 800; font-size: 1.35rem; letter-spacing: -0.5px; line-height: 1.1;">
-          Eat<span style="background: linear-gradient(135deg, #10B981 0%, #F59E0B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Sattva</span>
-        </span>
-        <span style="font-size: 0.6rem; font-weight: 700; color: #F59E0B; letter-spacing: 1.2px; text-transform: uppercase;">PURE NUTRITION</span>
-      </div>
-    </a>
 
-    <!-- Desktop Nav Links -->
-    <ul class="navbar__links">
-      <li><a href="/#how-it-works" class="navbar__link">How It Works</a></li>
-      <li><a href="/#target-audience" class="navbar__link">Who It's For</a></li>
-      <li><a href="/#pricing" class="navbar__link">5-Day Trial & Plans</a></li>
-      <li><a href="/#menu" class="navbar__link">Protein Menu</a></li>
-    </ul>
-
-    <!-- Auth & CTA -->
-    <div class="navbar__actions">
-      <a routerLink="/login" class="navbar__link navbar__signin" id="navbar-signin">Sign In</a>
-      <a routerLink="/signup" class="btn btn-coral btn-sm navbar__cta" id="navbar-signup">Sign Up</a>
+    <!-- Swiggy Brand & Location Selector Group -->
+    <div class="navbar__brand-location">
+      <!-- EatSattva Primary Logo -->
+      <a routerLink="/" class="navbar__logo">
+        <img src="main_logo.png" alt="EatSattva Logo" class="navbar__logo-img"
+          style="height: 110px; width: auto; object-fit: contain; display: block;" />
+      </a>
     </div>
 
-    <!-- Hamburger -->
-    <button
-      class="navbar__hamburger"
-      [class.navbar__hamburger--active]="isMobileMenuOpen()"
-      (click)="toggleMobileMenu()"
-      aria-label="Toggle navigation menu"
-    >
+    <!-- Right Side Actions & Swiggy Cart -->
+    <div class="navbar__actions">
+      <a routerLink="/login" class="navbar__link navbar__signin" id="navbar-signin">
+        <span style="font-size: 1.1rem;">👤</span>
+        <span>Sign In</span>
+      </a>
+    </div>
+
+    <!-- Hamburger Menu (Mobile) -->
+    <button class="navbar__hamburger" [class.navbar__hamburger--active]="isMobileMenuOpen()"
+      (click)="toggleMobileMenu()" aria-label="Toggle navigation menu">
       <span class="navbar__hamburger-line"></span>
       <span class="navbar__hamburger-line"></span>
       <span class="navbar__hamburger-line"></span>
     </button>
   </div>
 
-  <!-- Mobile Overlay -->
-  @if (isMobileMenuOpen()) {
-    <div class="navbar__overlay" (click)="closeMobileMenu()">
-      <div class="navbar__overlay-content" (click)="$event.stopPropagation()">
-        <ul class="navbar__overlay-links">
-          <li><a href="/#how-it-works" class="navbar__overlay-link" (click)="closeMobileMenu()">How It Works</a></li>
-          <li><a href="/#pricing" class="navbar__overlay-link" (click)="closeMobileMenu()">Pricing</a></li>
-          <li><a href="/#about" class="navbar__overlay-link" (click)="closeMobileMenu()">About</a></li>
-          <li><a routerLink="/login" class="navbar__overlay-link" (click)="closeMobileMenu()">Sign In</a></li>
-        </ul>
-        <a routerLink="/signup" class="btn btn-coral navbar__overlay-cta" (click)="closeMobileMenu()">Sign Up</a>
+  <!-- Location Picker Dropdown Modal -->
+  @if (isLocationModalOpen()) {
+  <div class="location-modal-backdrop" (click)="toggleLocationModal()">
+    <div class="location-modal-card card" (click)="$event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 1.1rem; margin: 0;">📍 Choose Delivery Location</h3>
+        <button (click)="toggleLocationModal()" style="font-size: 1.2rem; cursor: pointer; color: #64748B;">✕</button>
+      </div>
+      <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 14px;">Select your delivery area for 30-minute macro
+        box fulfillment:</p>
+      <div class="location-list">
+        @for (loc of availableLocations; track loc) {
+        <button class="location-item-btn" [class.location-item-btn--active]="currentLocation() === loc"
+          (click)="setLocation(loc)">
+          <span>📍 {{ loc }}</span>
+          @if (currentLocation() === loc) {
+          <span style="color: #16A34A; font-weight: 800;">✓</span>
+          }
+        </button>
+        }
       </div>
     </div>
+  </div>
+  }
+
+  <!-- Mobile Menu Overlay -->
+  @if (isMobileMenuOpen()) {
+  <div class="navbar__overlay" (click)="closeMobileMenu()">
+    <div class="navbar__overlay-content" (click)="$event.stopPropagation()">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+        <img src="main_logo.png" alt="EatSattva Logo"
+          style="height: 38px; width: auto; object-fit: contain; display: block;" />
+        <button (click)="closeMobileMenu()" style="font-size: 1.2rem;">✕</button>
+      </div>
+      <ul class="navbar__overlay-links">
+        <li><a href="/#menu" class="navbar__overlay-link" (click)="closeMobileMenu()">🥗 High-Protein Menu</a></li>
+        <li><a href="/#how-it-works" class="navbar__overlay-link" (click)="closeMobileMenu()">⚡ How It Works</a></li>
+        <li><a href="/#pricing" class="navbar__overlay-link" (click)="closeMobileMenu()">🏷️ 5-Day Trial & Plans</a>
+        </li>
+        <li><a routerLink="/login" class="navbar__overlay-link" (click)="closeMobileMenu()">👤 Sign In</a></li>
+      </ul>
+      <a routerLink="/select-goal" class="btn btn-primary navbar__overlay-cta" (click)="closeMobileMenu()">
+        Customize Your Box →
+      </a>
+    </div>
+  </div>
   }
 </nav>

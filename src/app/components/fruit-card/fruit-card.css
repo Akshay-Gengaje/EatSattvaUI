@@ -1,74 +1,175 @@
-/* ── Fruit Card ── */
-.fruit-card {
-  background: var(--white);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
+/* Swiggy Food Card Component Styles */
+.swiggy-food-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-md);
-  transition: transform var(--transition-base),
-              box-shadow var(--transition-base);
-  cursor: default;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.fruit-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+.swiggy-food-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: #CBD5E1;
 }
 
-/* ── Emoji area ── */
-.fruit-card__emoji-wrap {
-  width: 100px;
-  height: 100px;
-  border-radius: var(--radius-full);
+.swiggy-food-card__image-wrap {
+  height: 180px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  padding: 16px;
+  overflow: hidden;
 }
 
-.fruit-card__emoji {
-  font-size: 3.5rem;
-  line-height: 1;
-  transition: transform var(--transition-spring);
+.swiggy-food-card__diet-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  padding: 4px 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
-.fruit-card:hover .fruit-card__emoji {
-  transform: scale(1.15);
+.swiggy-food-card__promo-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
 }
 
-/* ── Body ── */
-.fruit-card__body {
+.swiggy-food-card__emoji {
+  font-size: 4.5rem;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.swiggy-food-card:hover .swiggy-food-card__emoji {
+  transform: scale(1.1) rotate(4deg);
+}
+
+/* ADD button at bottom-right of image container */
+.swiggy-food-card__add-wrap {
+  position: absolute;
+  bottom: -16px;
+  right: 20px;
+  z-index: 10;
+}
+
+.swiggy-quantity-counter {
+  display: flex;
+  align-items: center;
+  background: #16A34A;
+  color: #FFFFFF;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+  font-weight: 800;
+}
+
+.qty-btn {
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 800;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.qty-num {
+  padding: 0 10px;
+  font-size: 0.9rem;
+}
+
+/* Body Info */
+.swiggy-food-card__body {
+  padding: 24px 18px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: 8px;
+  flex: 1;
 }
 
-.fruit-card__name {
-  font-family: var(--font-heading);
-  font-size: var(--fs-lg);
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.fruit-card__tagline {
-  font-size: var(--fs-sm);
-  color: var(--text-light);
-  line-height: 1.5;
-}
-
-/* ── Nutrient badges ── */
-.fruit-card__nutrients {
+.swiggy-food-card__header {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-xs);
-  margin-top: var(--space-xs);
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.fruit-card__badge {
-  font-size: var(--fs-xs);
+.swiggy-food-card__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.25;
+}
+
+.swiggy-food-card__tagline {
+  font-size: 0.85rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.swiggy-food-card__macros {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+}
+
+.dot-sep {
+  color: #CBD5E1;
+}
+
+.swiggy-food-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed #F1F5F9;
+}
+
+.swiggy-food-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.price-current {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.price-original {
+  font-size: 0.82rem;
+  color: #94A3B8;
+  text-decoration: line-through;
+}
+
+.swiggy-food-card__tags {
+  display: flex;
+  gap: 4px;
 }

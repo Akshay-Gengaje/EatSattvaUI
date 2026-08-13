@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FruitService } from '../../services/fruit.service';
 import { BoxService } from '../../services/box.service';
@@ -12,7 +12,7 @@ import { FruitCard } from '../../components/fruit-card/fruit-card';
 })
 export class HomeComponent {
   private fruitService = inject(FruitService);
-  private boxService = inject(BoxService);
+  readonly boxService = inject(BoxService);
   private router = inject(Router);
 
   readonly fruits = this.fruitService.fruits;
@@ -21,23 +21,65 @@ export class HomeComponent {
   readonly testimonials = this.fruitService.testimonials;
   readonly personas = this.fruitService.personas;
 
-  readonly proteinMeals = computed(() => {
-    return this.fruits.slice(0, 6);
-  });
+  // Swiggy Search & Category Filter State
+  readonly searchQuery = signal('');
+  readonly activeCategory = signal('all');
+  readonly activeFilterTab = signal('all');
 
-  readonly heroEmojis = [
-    { emoji: '🥩', top: '10%', left: '5%', size: '3.5rem', delay: '0s' },
-    { emoji: '🍗', top: '20%', right: '8%', size: '3rem', delay: '1s' },
-    { emoji: '🧀', top: '65%', left: '3%', size: '2.8rem', delay: '2s' },
-    { emoji: '🫛', top: '75%', right: '5%', size: '3.2rem', delay: '0.5s' },
-    { emoji: '🥚', top: '40%', left: '8%', size: '2.5rem', delay: '1.5s' },
-    { emoji: '🥗', top: '50%', right: '10%', size: '3rem', delay: '2.5s' },
+  // Swiggy "What's on your mind?" Health Categories
+  readonly swiggyCategories = [
+    { id: 'all', name: 'All Meals', icon: '🍱' },
+    { id: 'high-protein', name: 'High Protein', icon: '💪' },
+    { id: 'muscle-gain', name: 'Muscle Gain', icon: '🥩' },
+    { id: 'weight-loss', name: 'Weight Loss', icon: '🥗' },
+    { id: 'keto', name: 'Keto Bowls', icon: '🥑' },
+    { id: 'pure-veg', name: 'Pure Veg 🟢', icon: '🫘' },
+    { id: 'detox', name: 'Detox Juices', icon: '🥤' }
   ];
 
-  readonly circleEmojis = ['🥩', '🍗', '🧀', '🫛', '🥚', '🥗', '🐟', '🍛'];
+  readonly filteredMeals = computed(() => {
+    let result = this.fruits;
+
+    // Filter by Swiggy circular category
+    const cat = this.activeCategory();
+    if (cat === 'high-protein') {
+      result = result.filter(f => (f.proteinGrams || 0) >= 42);
+    } else if (cat === 'muscle-gain') {
+      result = result.filter(f => f.goals.includes('muscle_building') || (f.proteinGrams || 0) >= 45);
+    } else if (cat === 'weight-loss') {
+      result = result.filter(f => f.goals.includes('weight_loss') || (f.calories || 500) <= 450);
+    } else if (cat === 'keto') {
+      result = result.filter(f => (f.carbsGrams || 30) <= 25);
+    } else if (cat === 'pure-veg') {
+      result = result.filter(f => f.dietaryType === 'veg' || !f.dietaryType);
+    } else if (cat === 'detox') {
+      result = result.filter(f => f.deficiencies.length > 0 || f.name.toLowerCase().includes('juice') || f.name.toLowerCase().includes('salad'));
+    }
+
+    // Filter by text search query
+    const q = this.searchQuery().toLowerCase().trim();
+    if (q) {
+      result = result.filter(f =>
+        f.name.toLowerCase().includes(q) ||
+        f.tagline.toLowerCase().includes(q) ||
+        f.nutrients.some(n => n.toLowerCase().includes(q))
+      );
+    }
+
+    return result;
+  });
 
   getStars(rating: number): number[] {
     return Array.from({ length: rating }, (_, i) => i);
+  }
+
+  selectCategory(catId: string): void {
+    this.activeCategory.set(catId);
+  }
+
+  onSearchInput(event: Event): void {
+    const val = (event.target as HTMLInputElement).value;
+    this.searchQuery.set(val);
   }
 
   selectPlanAndCheckout(planId: string): void {

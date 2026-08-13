@@ -1,7 +1,7 @@
 <section class="select-goal">
   <div class="container">
 
-    <!-- Progress Bar -->
+    <!-- Swiggy Progress Steps Bar -->
     <div class="progress-bar">
       <div class="progress-bar__step" [class.progress-bar__step--active]="currentStep() >= 1">
         <span class="progress-bar__dot">1</span>
@@ -10,7 +10,7 @@
       <div class="progress-bar__line" [class.progress-bar__line--active]="currentStep() >= 2"></div>
       <div class="progress-bar__step" [class.progress-bar__step--active]="currentStep() >= 2">
         <span class="progress-bar__dot">2</span>
-        <span class="progress-bar__label">Plan &amp; Consultation</span>
+        <span class="progress-bar__label">Plan &amp; Guidance</span>
       </div>
       <div class="progress-bar__line" [class.progress-bar__line--active]="false"></div>
       <div class="progress-bar__step">
@@ -24,8 +24,8 @@
       <div class="step-content animate-fade-in-up">
         <div class="text-center">
           <span class="section-label">Step 1 of 2</span>
-          <h1 class="section-title">Select Your Nutrition &amp; Health Goal</h1>
-          <p class="section-subtitle">We will customize your meal macronutrients (Protein, Carbs, Fats) based on your target</p>
+          <h1 class="section-title">Select Your Nutrition &amp; Health Target</h1>
+          <p class="section-subtitle">We will customize your meal macronutrients (Protein, Carbs, Fats) based on your goal</p>
         </div>
 
         <div class="goals-grid" style="margin-top: 24px;">
@@ -44,7 +44,6 @@
             class="btn btn-primary btn-lg"
             [disabled]="!selectedGoalId()"
             (click)="proceedToStep2()"
-            style="background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 700;"
           >
             Next: Select Plan &amp; Guidance →
           </button>
@@ -52,7 +51,7 @@
       </div>
     }
 
-    <!-- STEP 2: Choose Plan & Consultation Mode -->
+    <!-- STEP 2: Choose Plan & Guidance Mode -->
     @if (currentStep() === 2) {
       <div class="step-content animate-fade-in-up">
         <div class="text-center">
@@ -61,7 +60,7 @@
           <p class="section-subtitle">Select your subscription tier and guidance preference</p>
         </div>
 
-        <!-- Consultation Option Selector (Smart Monetization Model) -->
+        <!-- Consultation Option Selector -->
         <div style="margin: 24px 0;">
           <h3 style="font-size: 1.1rem; margin-bottom: 12px; text-align: left;">🧑‍⚕️ Customization Guidance Mode:</h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
@@ -69,8 +68,8 @@
             <!-- Option 1: Premium Human Nutritionist -->
             <div
               class="card"
-              [style.border]="consultationChoice() === 'human' ? '2px solid #F59E0B' : '1px solid var(--border-color)'"
-              [style.background]="consultationChoice() === 'human' ? 'rgba(245, 158, 11, 0.08)' : 'var(--bg-card)'"
+              [style.border]="consultationChoice() === 'human' ? '2px solid #16A34A' : '1px solid var(--border)'"
+              [style.background]="consultationChoice() === 'human' ? '#F0FDF4' : '#FFFFFF'"
               style="padding: 18px; border-radius: 14px; cursor: pointer; text-align: left;"
               (click)="selectConsultation('human')"
             >
@@ -84,10 +83,10 @@
                   }
                 </span>
               </div>
-              <h4 style="margin: 4px 0; font-size: 1.05rem;">1-on-1 Certified Human Nutritionist</h4>
-              <p style="font-size: 0.83rem; color: var(--text-muted); margin: 0 0 10px 0;">Personal diet call, 1-on-1 chart customization &amp; chef instructions.</p>
-              <div style="font-size: 0.85rem; font-weight: 600; color: #F59E0B;">
-                <input type="radio" [checked]="consultationChoice() === 'human'" name="consultSelect" style="accent-color: #F59E0B; margin-right: 6px;">
+              <h4 style="margin: 4px 0; font-size: 1.05rem; color: #0F172A;">1-on-1 Certified Human Nutritionist</h4>
+              <p style="font-size: 0.83rem; color: #64748B; margin: 0 0 10px 0;">Personal diet call, 1-on-1 chart customization &amp; chef instructions.</p>
+              <div style="font-size: 0.85rem; font-weight: 700; color: #16A34A;">
+                <input type="radio" [checked]="consultationChoice() === 'human'" name="consultSelect" style="accent-color: #16A34A; margin-right: 6px;">
                 <span>Select Human Expert</span>
               </div>
             </div>
@@ -95,19 +94,19 @@
             <!-- Option 2: Free AI Engine -->
             <div
               class="card"
-              [style.border]="consultationChoice() === 'ai' ? '2px solid #10B981' : '1px solid var(--border-color)'"
-              [style.background]="consultationChoice() === 'ai' ? 'rgba(16, 185, 129, 0.08)' : 'var(--bg-card)'"
+              [style.border]="consultationChoice() === 'ai' ? '2px solid #16A34A' : '1px solid var(--border)'"
+              [style.background]="consultationChoice() === 'ai' ? '#F0FDF4' : '#FFFFFF'"
               style="padding: 18px; border-radius: 14px; cursor: pointer; text-align: left;"
               (click)="selectConsultation('ai')"
             >
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
                 <span style="font-size: 1.8rem;">🤖</span>
-                <span class="badge" style="background: #10B981; color: #FFF; font-weight: 700;">100% FREE</span>
+                <span class="badge badge-green">100% FREE</span>
               </div>
-              <h4 style="margin: 4px 0; font-size: 1.05rem;">Instant AI Macro Customizer</h4>
-              <p style="font-size: 0.83rem; color: var(--text-muted); margin: 0 0 10px 0;">Automated smart macro &amp; calorie calculation tailored to your body weight.</p>
-              <div style="font-size: 0.85rem; font-weight: 600; color: #10B981;">
-                <input type="radio" [checked]="consultationChoice() === 'ai'" name="consultSelect" style="accent-color: #10B981; margin-right: 6px;">
+              <h4 style="margin: 4px 0; font-size: 1.05rem; color: #0F172A;">Instant AI Macro Customizer</h4>
+              <p style="font-size: 0.83rem; color: #64748B; margin: 0 0 10px 0;">Automated smart macro &amp; calorie calculation tailored to your body weight.</p>
+              <div style="font-size: 0.85rem; font-weight: 700; color: #16A34A;">
+                <input type="radio" [checked]="consultationChoice() === 'ai'" name="consultSelect" style="accent-color: #16A34A; margin-right: 6px;">
                 <span>Select Free AI Engine</span>
               </div>
             </div>
@@ -121,23 +120,23 @@
           @for (plan of pricingPlans; track plan.id) {
             <div
               class="card"
-              [style.border]="selectedPlanId() === plan.id ? '2px solid #F59E0B' : '1px solid var(--border-color)'"
-              [style.background]="selectedPlanId() === plan.id ? 'rgba(245, 158, 11, 0.08)' : 'var(--bg-card)'"
+              [style.border]="selectedPlanId() === plan.id ? '2px solid #16A34A' : '1px solid var(--border)'"
+              [style.background]="selectedPlanId() === plan.id ? '#F0FDF4' : '#FFFFFF'"
               style="padding: 20px; border-radius: 16px; cursor: pointer; transition: all 0.2s ease; text-align: left;"
               (click)="selectPlan(plan.id)"
             >
               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                <h3 style="font-size: 1.15rem; margin: 0;">{{ plan.name }}</h3>
+                <h3 style="font-size: 1.15rem; margin: 0; color: #0F172A;">{{ plan.name }}</h3>
                 @if (plan.isTrial) {
                   <span class="badge badge-gold" style="font-size: 0.7rem;">STARTER TRIAL</span>
                 }
               </div>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">{{ plan.description }}</p>
-              <div style="font-size: 1.6rem; font-weight: 800; color: #F59E0B; margin-bottom: 4px;">{{ plan.price }}</div>
-              <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px;">{{ plan.priceSubtext }}</div>
+              <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 12px;">{{ plan.description }}</p>
+              <div style="font-size: 1.6rem; font-weight: 900; color: #16A34A; margin-bottom: 4px;">{{ plan.price }}</div>
+              <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 16px;">{{ plan.priceSubtext }}</div>
 
-              <div style="display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.9rem; color: var(--text-main);">
-                <input type="radio" [checked]="selectedPlanId() === plan.id" name="planSelect" style="accent-color: #F59E0B;">
+              <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; color: #0F172A;">
+                <input type="radio" [checked]="selectedPlanId() === plan.id" name="planSelect" style="accent-color: #16A34A;">
                 <span>{{ selectedPlanId() === plan.id ? 'Selected' : 'Select Plan' }}</span>
               </div>
             </div>
@@ -150,7 +149,6 @@
           <button
             class="btn btn-primary btn-lg"
             (click)="proceedToBox()"
-            style="background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 700;"
           >
             Preview Your Protein Box →
           </button>

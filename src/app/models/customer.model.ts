@@ -1,22 +1,25 @@
 export interface LoginRequest {
-  emailOrPhone: string;
+  phoneNumber: string;
   password: string;
 }
 
 export interface LoginResponse {
-  token: string;
-  authenticated: boolean;
   message: string;
+  token?: string;
+  authenticated?: boolean;
 }
 
 export interface RegisterRequest {
   firstName: string;
   lastName: string;
-  email: string;
+  phoneNumber: string;
   password: string;
 }
 
 export interface RegisterResponse {
   message: string;
-  success: boolean;
+  email?: string;
+  emailVerified?: boolean;
+  success?: boolean;
 }
+

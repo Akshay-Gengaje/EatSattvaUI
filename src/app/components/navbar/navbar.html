@@ -1,21 +1,163 @@
 <nav class="navbar" [class.navbar--scrolled]="isScrolled()">
   <div class="navbar__inner container">
 
-    <!-- Swiggy Brand & Location Selector Group -->
+    <!-- Primary Logo -->
     <div class="navbar__brand-location">
-      <!-- EatSattva Primary Logo -->
       <a routerLink="/" class="navbar__logo">
-        <img src="main_logo.png" alt="EatSattva Logo" class="navbar__logo-img"
-          style="height: 110px; width: auto; object-fit: contain; display: block;" />
+        <img src="main_logo.png" alt="EatSattva Logo" class="navbar__logo-img" />
       </a>
     </div>
 
-    <!-- Right Side Actions & Swiggy Cart -->
+    <!-- Right Side Actions & Sign In Button -->
     <div class="navbar__actions">
-      <a routerLink="/login" class="navbar__link navbar__signin" id="navbar-signin">
-        <span style="font-size: 1.1rem;">👤</span>
-        <span>Sign In</span>
+      <!-- Get the App Button -->
+      <a href="#" class="navbar__link navbar__get-app" style="text-decoration: none; margin-right: 24px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+        </svg>
+        <span>Get the App</span>
       </a>
+
+      @if (!authService.isAuthenticated()) {
+      <button (click)="openLoginDrawer('login')" class="navbar__link navbar__signin swiggy-header-btn"
+        id="navbar-signin"
+        style="background: #02060C; color: #FFFFFF; border: none; cursor: pointer; padding: 12px 24px; border-radius: 12px; font-weight: 700;">
+        <span style="font-weight: 700; font-size: 1rem; color: inherit;">Sign In</span>
+      </button>
+      } @else {
+      <div class="navbar__user-profile" style="display: flex; align-items: center; gap: 8px;">
+        <span class="badge badge-green" style="font-size: 0.85rem; padding: 6px 12px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          +91 {{ authService.userPhone() || 'Logged In' }}
+        </span>
+        <button (click)="authService.logout()" class="btn btn-secondary btn-sm"
+          style="padding: 4px 10px; font-size: 0.75rem;">
+          Logout
+        </button>
+      </div>
+      }
     </div>
   </div>
+
+  <!-- SWIGGY SIGN-IN / SIGN-UP SLIDE-OVER DRAWER (Hover / Slide Animation Right to Left) -->
+  @if (authService.isLoginDrawerOpen()) {
+  <div class="swiggy-drawer-backdrop" (click)="closeLoginDrawer()">
+    <div class="swiggy-drawer-panel" (click)="$event.stopPropagation()">
+
+      <!-- Close Button -->
+      <button (click)="closeLoginDrawer()" class="swiggy-drawer-close" aria-label="Close sign in drawer">
+        ✕
+      </button>
+
+      <!-- Drawer Header (Toggles dynamically between Login & Sign Up) -->
+      <div class="swiggy-drawer-header">
+        <div>
+          @if (drawerMode() === 'login') {
+          <h2 class="swiggy-drawer-title">Login</h2>
+          <p class="swiggy-drawer-subtitle">
+            or <span class="swiggy-drawer-link" (click)="switchDrawerMode('signup')">create an account</span>
+          </p>
+          } @else {
+          <h2 class="swiggy-drawer-title">Sign up</h2>
+          <p class="swiggy-drawer-subtitle">
+            or <span class="swiggy-drawer-link" (click)="switchDrawerMode('login')">login to your account</span>
+          </p>
+          }
+        </div>
+        <div class="swiggy-drawer-logo-wrap">
+          <img src="main_logo.png" alt="EatSattva Logo" />
+        </div>
+      </div>
+
+      <div class="swiggy-drawer-divider"></div>
+
+      <!-- LOGIN MODE -->
+      @if (drawerMode() === 'login') {
+      <form (ngSubmit)="submitForm()" class="swiggy-drawer-form">
+        <div class="swiggy-phone-group">
+          <span class="swiggy-phone-prefix">+91</span>
+          <input type="tel" class="swiggy-phone-input" placeholder="Phone number" [(ngModel)]="phoneNumber" name="phone"
+            maxlength="10" autofocus />
+        </div>
+
+        <div class="swiggy-input-field" style="margin-top: 2px;">
+          <input type="password" class="swiggy-drawer-input" placeholder="Password" [(ngModel)]="password"
+            name="password"
+            style="width: 100%; padding: 14px 16px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 1rem; font-weight: 600;" />
+        </div>
+
+        @if (formError()) {
+        <p class="swiggy-error-text">{{ formError() }}</p>
+        }
+
+        <button type="submit" class="btn btn-primary swiggy-drawer-submit" [disabled]="isSubmitting()">
+          @if (isSubmitting()) {
+          <span>Authenticating...</span>
+          } @else {
+          <span>LOGIN</span>
+          }
+        </button>
+
+        <p class="swiggy-legal-text">
+          By continuing, you agree to EatSattva's
+          <a href="#" style="color: #16A34A; text-decoration: underline;">Terms of Service</a> &amp;
+          <a href="#" style="color: #16A34A; text-decoration: underline;">Privacy Policy</a>
+        </p>
+      </form>
+      }
+
+      <!-- SIGN UP MODE -->
+      @if (drawerMode() === 'signup') {
+      <form (ngSubmit)="submitForm()" class="swiggy-drawer-form">
+        <div class="swiggy-phone-group">
+          <span class="swiggy-phone-prefix">+91</span>
+          <input type="tel" class="swiggy-phone-input" placeholder="Phone number" [(ngModel)]="phoneNumber" name="phone"
+            maxlength="10" autofocus />
+        </div>
+
+        <div class="swiggy-input-field" style="margin-top: 2px; display: flex; gap: 8px;">
+          <input type="text" class="swiggy-drawer-input" placeholder="First Name" [(ngModel)]="signUpFirstName"
+            name="firstName"
+            style="flex: 1; padding: 14px 16px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 1rem; font-weight: 600;" />
+          <input type="text" class="swiggy-drawer-input" placeholder="Last Name" [(ngModel)]="signUpLastName"
+            name="lastName"
+            style="flex: 1; padding: 14px 16px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 1rem; font-weight: 600;" />
+        </div>
+
+        <div class="swiggy-input-field" style="margin-top: 2px;">
+          <input type="password" class="swiggy-drawer-input" placeholder="Password" [(ngModel)]="password"
+            name="password"
+            style="width: 100%; padding: 14px 16px; border: 1.5px solid #E2E8F0; border-radius: 8px; font-size: 1rem; font-weight: 600;" />
+        </div>
+
+        @if (formError()) {
+        <p class="swiggy-error-text" style="margin-top: 8px;">{{ formError() }}</p>
+        }
+
+        <button type="submit" class="btn btn-primary swiggy-drawer-submit" [disabled]="isSubmitting()"
+          style="margin-top: 16px;">
+          @if (isSubmitting()) {
+          <span>Creating account...</span>
+          } @else {
+          <span>CREATE ACCOUNT</span>
+          }
+        </button>
+
+        <p class="swiggy-legal-text">
+          By continuing, you agree to EatSattva's
+          <a href="#" style="color: #16A34A; text-decoration: underline;">Terms of Service</a> &amp;
+          <a href="#" style="color: #16A34A; text-decoration: underline;">Privacy Policy</a>
+        </p>
+      </form>
+      }
+
+    </div>
+  </div>
+  }
 </nav>

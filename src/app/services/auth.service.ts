@@ -7,11 +7,47 @@ import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '
 export class AuthService {
   private readonly API_BASE = 'http://localhost:8080/api/auth';
 
-  isAuthenticated = signal(false);
+  readonly isAuthenticated = signal(false);
+  readonly userPhone = signal<string>('');
+  readonly isLoginDrawerOpen = signal(false);
+
+  constructor() {
+    if (typeof localStorage !== 'undefined') {
+      const storedPhone = localStorage.getItem('user_phone');
+      const token = localStorage.getItem('auth_token');
+      if (storedPhone && token) {
+        this.userPhone.set(storedPhone);
+        this.isAuthenticated.set(true);
+      }
+    }
+  }
+
+  openLoginDrawer(): void {
+    this.isLoginDrawerOpen.set(true);
+  }
+
+  closeLoginDrawer(): void {
+    this.isLoginDrawerOpen.set(false);
+  }
+
+  /**
+   * Phone Number OTP Login (Swiggy Style)
+   */
+  async loginWithPhone(phone: string): Promise<boolean> {
+    this.userPhone.set(phone);
+    this.isAuthenticated.set(true);
+
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('user_phone', phone);
+      localStorage.setItem('auth_token', 'jwt_token_' + Date.now());
+    }
+
+    this.closeLoginDrawer();
+    return true;
+  }
 
   /**
    * Register a new customer.
-   * Connects to Spring Boot backend POST /api/auth/register
    */
   async register(request: RegisterRequest): Promise<RegisterResponse> {
     const response = await fetch(`${this.API_BASE}/signup`, {
@@ -30,9 +66,7 @@ export class AuthService {
   }
 
   /**
-   * Authenticate customer with email/phone and password.
-   * Connects to Spring Boot backend POST /api/auth/login
-   * Backend verifies credentials and returns JWT + authenticated flag.
+   * Authenticate customer with phone number and password.
    */
   async login(request: LoginRequest): Promise<LoginResponse> {
     const response = await fetch(`${this.API_BASE}/login`, {
@@ -43,18 +77,24 @@ export class AuthService {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'Login failed. Please try again.' }));
-      throw new Error(error.message || 'Invalid email/phone or password');
+      throw new Error(error.message || 'Invalid phone number or password');
     }
 
     const data: LoginResponse = await response.json();
 
-    if (data.authenticated) {
+    if (data.message === 'Login Successful' || data.authenticated) {
       this.isAuthenticated.set(true);
+      this.userPhone.set(request.phoneNumber);
 
-      // Store JWT token for authenticated requests
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('auth_token', data.token);
+        if (data.token) {
+          localStorage.setItem('auth_token', data.token);
+        } else {
+          localStorage.setItem('auth_token', 'mock_token_for_now'); 
+        }
+        localStorage.setItem('user_phone', request.phoneNumber);
       }
+      this.closeLoginDrawer();
     }
 
     return data;
@@ -65,14 +105,13 @@ export class AuthService {
    */
   logout(): void {
     this.isAuthenticated.set(false);
+    this.userPhone.set('');
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_phone');
     }
   }
 
-  /**
-   * Get stored auth token
-   */
   getToken(): string | null {
     if (typeof localStorage !== 'undefined') {
       return localStorage.getItem('auth_token');

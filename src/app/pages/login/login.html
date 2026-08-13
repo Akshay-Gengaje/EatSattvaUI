@@ -12,7 +12,7 @@
     <div class="login-branding">
       <div class="login-branding__content">
         <div class="login-branding__badge" style="background: transparent; border: none; padding: 0; margin-bottom: 24px;">
-          <img src="main_logo.png" alt="EatSattva Logo" style="height: 48px; width: auto; object-fit: contain; display: block;" />
+          <img src="main_logo.png" alt="EatSattva Logo" style="height: 72px; width: auto; object-fit: contain; display: block;" />
         </div>
         <h1 class="login-branding__title">Welcome back to <span class="login-branding__highlight">healthy living</span></h1>
         <p class="login-branding__text">Sign in to access your personalized fruit boxes, track deliveries, and manage your wellness journey.</p>
@@ -60,37 +60,6 @@
           <p class="login-form-header__subtitle">Enter your credentials to continue</p>
         </div>
 
-        <!-- Login Method Toggle -->
-        <div class="login-toggle" id="login-method-toggle">
-          <button
-            class="login-toggle__btn"
-            [class.login-toggle__btn--active]="loginMethod() === 'email'"
-            (click)="switchLoginMethod('email')"
-            type="button"
-            id="login-toggle-email"
-          >
-            <svg class="login-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="4" width="20" height="16" rx="3"/>
-              <polyline points="22,7 12,14 2,7"/>
-            </svg>
-            Email
-          </button>
-          <button
-            class="login-toggle__btn"
-            [class.login-toggle__btn--active]="loginMethod() === 'phone'"
-            (click)="switchLoginMethod('phone')"
-            type="button"
-            id="login-toggle-phone"
-          >
-            <svg class="login-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="5" y="2" width="14" height="20" rx="3"/>
-              <line x1="12" y1="18" x2="12.01" y2="18"/>
-            </svg>
-            Phone
-          </button>
-          <div class="login-toggle__slider" [class.login-toggle__slider--right]="loginMethod() === 'phone'"></div>
-        </div>
-
         <!-- Error Message -->
         @if (errorMessage()) {
           <div class="login-error" id="login-error-message">
@@ -105,32 +74,24 @@
 
         <!-- Login Form -->
         <form class="login-form" (ngSubmit)="onSubmit()" id="login-form">
-          <!-- Email / Mobile Input -->
+          <!-- Mobile Number Input -->
           <div class="login-field">
             <label class="login-field__label" for="login-identifier">
-              {{ loginMethod() === 'email' ? 'Email Address' : 'Mobile Number' }}
+              Mobile Number
             </label>
             <div class="login-field__input-wrapper">
-              @if (loginMethod() === 'email') {
-                <svg class="login-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="4" width="20" height="16" rx="3"/>
-                  <polyline points="22,7 12,14 2,7"/>
-                </svg>
-              } @else {
-                <svg class="login-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="5" y="2" width="14" height="20" rx="3"/>
-                  <line x1="12" y1="18" x2="12.01" y2="18"/>
-                </svg>
-              }
+              <span style="position: absolute; left: 16px; top: 14px; font-weight: 600; color: #334155; font-size: 1rem; z-index: 2;">+91</span>
               <input
                 class="login-field__input"
-                [type]="loginMethod() === 'email' ? 'email' : 'tel'"
-                [placeholder]="loginMethod() === 'email' ? 'you@example.com' : '9876543210'"
-                [ngModel]="email()"
-                (ngModelChange)="email.set($event)"
-                name="identifier"
+                type="tel"
+                placeholder="10-digit mobile number"
+                [ngModel]="phoneNumber()"
+                (ngModelChange)="phoneNumber.set($event)"
+                name="phoneNumber"
                 id="login-identifier"
-                autocomplete="username"
+                autocomplete="tel"
+                maxlength="10"
+                style="padding-left: 54px;"
               />
             </div>
           </div>

@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 export class SignupComponent {
   firstName = signal('');
   lastName = signal('');
-  email = signal('');
+  phoneNumber = signal('');
   password = signal('');
   confirmPassword = signal('');
   showPassword = signal(false);
@@ -69,7 +69,7 @@ export class SignupComponent {
 
     const firstName = this.firstName().trim();
     const lastName = this.lastName().trim();
-    const email = this.email().trim();
+    const phoneNumber = this.phoneNumber().trim();
     const password = this.password();
     const confirmPassword = this.confirmPassword();
 
@@ -84,14 +84,13 @@ export class SignupComponent {
       return;
     }
 
-    if (!email) {
-      this.errorMessage.set('Please enter your email address');
+    if (!phoneNumber) {
+      this.errorMessage.set('Please enter your phone number');
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      this.errorMessage.set('Please enter a valid email address');
+    if (phoneNumber.length < 10) {
+      this.errorMessage.set('Please enter a valid 10-digit phone number');
       return;
     }
 
@@ -121,7 +120,7 @@ export class SignupComponent {
       await this.authService.register({
         firstName,
         lastName,
-        email,
+        phoneNumber,
         password,
       });
       // On successful registration, redirect to login

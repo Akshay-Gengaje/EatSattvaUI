@@ -12,7 +12,7 @@
     <div class="signup-branding">
       <div class="signup-branding__content">
         <div class="signup-branding__badge" style="background: rgba(255, 255, 255, 0.1); padding: 8px 16px;">
-          <img src="main_logo.png" alt="EatSattva" style="height: 36px; width: auto; object-fit: contain;" />
+          <img src="main_logo.png" alt="EatSattva" style="height: 72px; width: auto; object-fit: contain;" />
         </div>
         <h1 class="signup-branding__title">Start your <span class="signup-branding__highlight">wellness journey</span></h1>
         <p class="signup-branding__text">Create your account and get personalized fruit boxes curated by expert nutritionists, delivered fresh to your doorstep every week.</p>
@@ -120,23 +120,22 @@
              </div>
            </div>
 
-           <!-- Email Input -->
+           <!-- Phone Number Input -->
            <div class="signup-field">
-            <label class="signup-field__label" for="signup-email">Email Address</label>
+            <label class="signup-field__label" for="signup-phone">Phone Number</label>
             <div class="signup-field__input-wrapper">
-              <svg class="signup-field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="4" width="20" height="16" rx="3"/>
-                <polyline points="22,7 12,14 2,7"/>
-              </svg>
+              <span style="position: absolute; left: 16px; top: 14px; font-weight: 600; color: #334155; font-size: 1rem;">+91</span>
               <input
                 class="signup-field__input"
-                type="email"
-                placeholder="you@example.com"
-                [ngModel]="email()"
-                (ngModelChange)="email.set($event)"
-                name="email"
-                id="signup-email"
-                autocomplete="email"
+                type="tel"
+                placeholder="Phone number"
+                [ngModel]="phoneNumber()"
+                (ngModelChange)="phoneNumber.set($event)"
+                name="phone"
+                id="signup-phone"
+                autocomplete="tel"
+                maxlength="10"
+                style="padding-left: 48px;"
               />
             </div>
           </div>

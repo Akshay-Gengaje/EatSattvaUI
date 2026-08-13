@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -9,56 +10,54 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class LoginComponent {
-  email = signal('');
+export class LoginComponent implements OnInit {
+  phoneNumber = signal('');
   password = signal('');
   showPassword = signal(false);
   isLoading = signal(false);
   errorMessage = signal('');
-  loginMethod = signal<'email' | 'phone'>('email');
   rememberMe = signal(false);
+
+  private route = inject(ActivatedRoute);
+  private toastService = inject(ToastService);
 
   constructor(
     private authService: AuthService,
     private router: Router,
   ) {}
 
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['registered'] === 'true') {
+        setTimeout(() => {
+          this.toastService.success('Registration successful! Please sign in.');
+        }, 100);
+      }
+    });
+  }
+
   togglePasswordVisibility(): void {
     this.showPassword.update((v) => !v);
   }
 
-  switchLoginMethod(method: 'email' | 'phone'): void {
-    this.loginMethod.set(method);
-    this.email.set('');
-    this.errorMessage.set('');
-  }
+
 
   async onSubmit(): Promise<void> {
     this.errorMessage.set('');
 
-    const identifier = this.email().trim();
+    const identifier = this.phoneNumber().trim();
     const password = this.password();
 
     // Validation
     if (!identifier) {
-      this.errorMessage.set(
-        this.loginMethod() === 'email' ? 'Please enter your email address' : 'Please enter your phone number',
-      );
+      this.errorMessage.set('Please enter your phone number');
       return;
     }
 
-    if (this.loginMethod() === 'email') {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(identifier)) {
-        this.errorMessage.set('Please enter a valid email address');
-        return;
-      }
-    } else {
-      const phoneRegex = /^[0-9]{10}$/;
-      if (!phoneRegex.test(identifier)) {
-        this.errorMessage.set('Please enter a valid 10-digit phone number');
-        return;
-      }
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(identifier)) {
+      this.errorMessage.set('Please enter a valid 10-digit phone number');
+      return;
     }
 
     if (!password) {
@@ -75,9 +74,10 @@ export class LoginComponent {
 
     try {
       await this.authService.login({
-        emailOrPhone: identifier,
+        phoneNumber: identifier,
         password,
       });
+      this.toastService.success('Welcome back! Login successful.');
       this.router.navigate(['/']);
     } catch (error: any) {
       this.errorMessage.set(error.message || 'Login failed. Please check your credentials.');

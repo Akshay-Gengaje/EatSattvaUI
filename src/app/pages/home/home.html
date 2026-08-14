@@ -6,43 +6,38 @@
 
     <!-- Left Content & Swiggy Search -->
     <div class="swiggy-hero__content">
-      <div class="swiggy-hero__badge">
+      <!-- <div class="swiggy-hero__badge">
         <span class="badge badge-green">⚡ 30-MIN MACRO BOX DELIVERY</span>
-      </div>
+      </div> -->
 
       <h1 class="swiggy-hero__title">
         Eat Healthy Every Day.<br>
-        <span class="swiggy-hero__title-accent">Gourmet High-Protein Meals.</span>
+        <span class="swiggy-hero__title-accent">Nutritionist Crafted High Protein Meals.</span>
       </h1>
 
-      <p class="swiggy-hero__subtext">
+      <!-- <p class="swiggy-hero__subtext">
         Chef-crafted macro meal boxes (35g–55g clean protein) designed by certified nutritionists. Delivered fresh to your home or office.
-      </p>
+      </p> -->
 
-      <!-- Swiggy Dish Search Bar Input -->
+      <!-- Swiggy Dish Search Bar Input
       <div class="swiggy-search-bar">
         <span class="swiggy-search-bar__icon">🔍</span>
-        <input
-          type="text"
-          class="swiggy-search-bar__input"
-          placeholder="Search for High-Protein Bowls, Salads, Keto Meals..."
-          [value]="searchQuery()"
-          (input)="onSearchInput($event)"
-        />
+        <input type="text" class="swiggy-search-bar__input"
+          placeholder="Search for High-Protein Bowls, Salads, Keto Meals..." [value]="searchQuery()"
+          (input)="onSearchInput($event)" />
         <button class="btn btn-primary swiggy-search-bar__btn" (click)="scrollTo('menu')">
           Search
         </button>
-      </div>
+      </div> -->
 
       <!-- Quick Trust Highlights -->
       <div class="swiggy-hero__trust">
-        <span class="trust-pill">⚡ 25-35 Min Delivery</span>
         <span class="trust-pill">🥗 100% Macro Verified</span>
         <span class="trust-pill">💪 35g-55g Clean Protein</span>
       </div>
     </div>
 
-    <!-- Right Hero Promo Banner Card (5-Day Trial) -->
+    <!-- Right Hero Promo Banner Card (5-Day Trial)
     <div class="swiggy-hero__promo-card card">
       <div class="promo-card__header">
         <span class="badge badge-gold">POPULAR STARTER</span>
@@ -63,12 +58,9 @@
       </div>
     </div>
 
+  -->
   </div>
 </section>
-
-<!-- ============================================================
-     SWIGGY "WHAT'S ON YOUR MIND?" CATEGORIES SECTION
-     ============================================================ -->
 <section class="swiggy-categories-section">
   <div class="container">
     <div class="swiggy-categories-header">
@@ -79,16 +71,13 @@
     <!-- Circular Category Pills Carousel -->
     <div class="swiggy-category-list">
       @for (cat of swiggyCategories; track cat.id) {
-        <button
-          class="swiggy-category-item"
-          [class.swiggy-category-item--active]="activeCategory() === cat.id"
-          (click)="selectCategory(cat.id)"
-        >
-          <div class="swiggy-category-icon-wrap">
-            <span class="swiggy-category-icon">{{ cat.icon }}</span>
-          </div>
-          <span class="swiggy-category-label">{{ cat.name }}</span>
-        </button>
+      <button class="swiggy-category-item" [class.swiggy-category-item--active]="activeCategory() === cat.id"
+        (click)="selectCategory(cat.id)">
+        <div class="swiggy-category-icon-wrap">
+          <span class="swiggy-category-icon">{{ cat.icon }}</span>
+        </div>
+        <span class="swiggy-category-label">{{ cat.name }}</span>
+      </button>
       }
     </div>
   </div>
@@ -99,11 +88,13 @@
      ============================================================ -->
 <section class="section menu-section" id="menu">
   <div class="container">
-    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px;">
+    <div
+      style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 24px;">
       <div>
         <span class="section-label">Verified Macros</span>
         <h2 class="section-title" style="margin-bottom: 4px;">Top High-Protein Boxes</h2>
-        <p style="color: #64748B; font-size: 0.95rem;">Handcrafted macro meals packed with 35g to 52g protein per serving</p>
+        <p style="color: #64748B; font-size: 0.95rem;">Handcrafted macro meals packed with 35g to 52g protein per
+          serving</p>
       </div>
 
       <div style="display: flex; gap: 8px;">
@@ -114,7 +105,7 @@
     <!-- Food Cards Grid -->
     <div class="fruits-grid">
       @for (meal of filteredMeals(); track meal.id) {
-        <app-fruit-card [fruit]="meal"></app-fruit-card>
+      <app-fruit-card [fruit]="meal"></app-fruit-card>
       }
     </div>
 
@@ -133,32 +124,36 @@
   <div class="container text-center">
     <span class="section-label">Tailored Guidance</span>
     <h2 class="section-title">Expert Nutritionist &amp; Chef Customization</h2>
-    <p class="section-subtitle">Scientifically calculated meal ratios tailored to your body metrics and daily protein target</p>
+    <p class="section-subtitle">Scientifically calculated meal ratios tailored to your body metrics and daily
+      protein
+      target</p>
 
     <div class="personas-grid">
       @for (p of personas; track p.id) {
-        <div class="persona-card card" style="background: #FFFFFF; border: 1px solid #E2E8F0; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-              <span style="font-size: 2.8rem;">{{ p.icon }}</span>
-              <span class="badge badge-green">{{ p.badge }}</span>
-            </div>
-            <h3 style="font-size: 1.3rem; margin-bottom: 8px; color: #0F172A;">{{ p.title }}</h3>
-            <p style="color: #64748B; font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px;">{{ p.subtitle }}</p>
-
-            <ul style="list-style: none; padding: 0; margin: 0 0 20px 0;">
-              @for (b of p.benefits; track b) {
-                <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 0.88rem; color: #334155;">
-                  <span style="color: #16A34A; font-weight: bold;">✓</span> {{ b }}
-                </li>
-              }
-            </ul>
+      <div class="persona-card card"
+        style="background: #FFFFFF; border: 1px solid #E2E8F0; text-align: left; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <span style="font-size: 2.8rem;">{{ p.icon }}</span>
+            <span class="badge badge-green">{{ p.badge }}</span>
           </div>
+          <h3 style="font-size: 1.3rem; margin-bottom: 8px; color: #0F172A;">{{ p.title }}</h3>
+          <p style="color: #64748B; font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px;">{{ p.subtitle }}</p>
 
-          <button (click)="scrollTo('pricing')" class="btn btn-outline" style="width: 100%;">
-            Customize Your Plan →
-          </button>
+          <ul style="list-style: none; padding: 0; margin: 0 0 20px 0;">
+            @for (b of p.benefits; track b) {
+            <li
+              style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 0.88rem; color: #334155;">
+              <span style="color: #16A34A; font-weight: bold;">✓</span> {{ b }}
+            </li>
+            }
+          </ul>
         </div>
+
+        <button (click)="scrollTo('pricing')" class="btn btn-outline" style="width: 100%;">
+          Customize Your Plan →
+        </button>
+      </div>
       }
     </div>
   </div>
@@ -167,7 +162,7 @@
 <!-- ============================================================
      PRICING TIERS SECTION
      ============================================================ -->
-<section class="section pricing" id="pricing">
+<!-- <section class="section pricing" id="pricing">
   <div class="container text-center">
     <span class="section-label">Transparent Plans</span>
     <h2 class="section-title">Choose Your Meal Plan or Start 5-Day Trial</h2>
@@ -175,39 +170,34 @@
 
     <div class="pricing-grid">
       @for (plan of pricingPlans; track plan.id) {
-        <div class="pricing-card card" [class.pricing-card--highlighted]="plan.highlighted">
-          <div>
-            @if (plan.badge) {
-              <span class="badge badge-gold" style="margin-bottom: 10px;">{{ plan.badge }}</span>
+      <div class="pricing-card card" [class.pricing-card--highlighted]="plan.highlighted">
+        <div>
+          @if (plan.badge) {
+          <span class="badge badge-gold" style="margin-bottom: 10px;">{{ plan.badge }}</span>
+          }
+          <h3 class="pricing-card__name">{{ plan.name }}</h3>
+          <p class="pricing-card__desc">{{ plan.description }}</p>
+
+          <div class="pricing-card__price">{{ plan.price }}</div>
+          <p class="pricing-card__subtext">{{ plan.priceSubtext }}</p>
+
+          <ul class="pricing-card__features">
+            @for (feature of plan.features; track feature) {
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">✓</span>
+              {{ feature }}
+            </li>
             }
-            <h3 class="pricing-card__name">{{ plan.name }}</h3>
-            <p class="pricing-card__desc">{{ plan.description }}</p>
-
-            <div class="pricing-card__price">{{ plan.price }}</div>
-            <p class="pricing-card__subtext">{{ plan.priceSubtext }}</p>
-
-            <ul class="pricing-card__features">
-              @for (feature of plan.features; track feature) {
-                <li class="pricing-card__feature">
-                  <span class="pricing-card__check">✓</span>
-                  {{ feature }}
-                </li>
-              }
-            </ul>
-          </div>
-
-          <button
-            (click)="selectPlanAndCheckout(plan.id)"
-            class="btn"
-            [class.btn-primary]="plan.highlighted"
-            [class.btn-outline]="!plan.highlighted"
-            style="width: 100%; margin-top: 16px;"
-          >{{ plan.cta }}</button>
+          </ul>
         </div>
+
+        <button (click)="selectPlanAndCheckout(plan.id)" class="btn" [class.btn-primary]="plan.highlighted"
+          [class.btn-outline]="!plan.highlighted" style="width: 100%; margin-top: 16px;">{{ plan.cta }}</button>
+      </div>
       }
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- ============================================================
      TESTIMONIALS SECTION
@@ -220,23 +210,23 @@
 
     <div class="testimonials-grid">
       @for (t of testimonials; track t.id) {
-        <div class="testimonial-card card" style="text-align: left;">
-          <div class="testimonial-card__header">
-            <span class="testimonial-card__avatar">{{ t.avatar }}</span>
-            <div class="testimonial-card__info">
-              <strong class="testimonial-card__name">{{ t.name }}</strong>
-              <div style="font-size: 0.78rem; color: #16A34A; font-weight: 700;">{{ t.incomeSegment }}</div>
-              <span class="testimonial-card__city">{{ t.city }} · {{ t.role }}</span>
-            </div>
-            <span class="badge badge-primary testimonial-card__goal">{{ t.goal }}</span>
+      <div class="testimonial-card card" style="text-align: left;">
+        <div class="testimonial-card__header">
+          <span class="testimonial-card__avatar">{{ t.avatar }}</span>
+          <div class="testimonial-card__info">
+            <strong class="testimonial-card__name">{{ t.name }}</strong>
+            <div style="font-size: 0.78rem; color: #16A34A; font-weight: 700;">{{ t.incomeSegment }}</div>
+            <span class="testimonial-card__city">{{ t.city }} · {{ t.role }}</span>
           </div>
-          <div class="testimonial-card__stars">
-            @for (star of getStars(t.rating); track star) {
-              <span>⭐</span>
-            }
-          </div>
-          <p class="testimonial-card__review">"{{ t.review }}"</p>
+          <span class="badge badge-primary testimonial-card__goal">{{ t.goal }}</span>
         </div>
+        <div class="testimonial-card__stars">
+          @for (star of getStars(t.rating); track star) {
+          <span>⭐</span>
+          }
+        </div>
+        <p class="testimonial-card__review">"{{ t.review }}"</p>
+      </div>
       }
     </div>
   </div>
@@ -246,19 +236,19 @@
      SWIGGY FLOATING STICKY CART BOTTOM BAR
      ============================================================ -->
 @if (boxService.curatedFruits().length > 0) {
-  <div class="swiggy-sticky-cart-bar">
-    <div class="container swiggy-sticky-cart-inner">
-      <div class="swiggy-sticky-cart-info">
-        <span class="swiggy-sticky-cart-count">
-          🛒 {{ boxService.curatedFruits().length }} Meal Boxes Selected
-        </span>
-        <span class="swiggy-sticky-cart-price">
-          Total: ₹{{ boxService.totalPrice() }}
-        </span>
-      </div>
-      <a routerLink="/box-preview" class="btn btn-primary btn-sm swiggy-sticky-cart-btn">
-        View Cart & Checkout →
-      </a>
+<div class="swiggy-sticky-cart-bar">
+  <div class="container swiggy-sticky-cart-inner">
+    <div class="swiggy-sticky-cart-info">
+      <span class="swiggy-sticky-cart-count">
+        🛒 {{ boxService.curatedFruits().length }} Meal Boxes Selected
+      </span>
+      <span class="swiggy-sticky-cart-price">
+        Total: ₹{{ boxService.totalPrice() }}
+      </span>
     </div>
+    <a routerLink="/box-preview" class="btn btn-primary btn-sm swiggy-sticky-cart-btn">
+      View Cart & Checkout →
+    </a>
   </div>
+</div>
 }
